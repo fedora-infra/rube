@@ -1,21 +1,21 @@
-import getpass
+import vault
 import sys
 
 _cache = {}
 
 
-def prompt_for_auth(key):
+def prompt_for_auth(service):
     global _cache
 
-    if key in _cache:
-        return _cache[key]
+    if service in _cache:
+        return _cache[service]
 
     original_stdout = sys.stdout
     sys.stdout = sys.stderr
-    username = raw_input(key + " username:")
+    username = vault.get(service, "username")
+    password = vault.get(service, "password")
     sys.stdout = original_stdout
-    password = getpass.getpass(key + " password:")
 
-    _cache[key] = (username, password)
+    _cache[service] = (username, password)
 
     return username, password
