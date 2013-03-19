@@ -73,6 +73,7 @@ class TestBodhi(unittest.TestCase):
         self.driver.get(elem.get_attribute("href"))
         self.wait_for("Status:")
 
+    @rube.expects_fedmsg('stg.bodhi.update.comment')
     def test_update_comment(self):
         self.driver.get(self.base + "/login")
         eq_("Login", self.driver.title)

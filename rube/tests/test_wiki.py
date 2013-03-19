@@ -51,6 +51,7 @@ class TestWiki(unittest.TestCase):
         self.driver.get(self.base + "/Fedora_Project_Wiki")
         eq_("FedoraProject", self.driver.title)
 
+    @rube.expects_fedmsg('stg.wiki.article.edit')
     def test_login_and_edit(self):
         self.driver.get(self.base + "/Fedora_Project_Wiki")
         eq_("FedoraProject", self.driver.title)
