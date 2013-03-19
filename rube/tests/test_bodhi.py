@@ -66,13 +66,14 @@ class TestBodhi(unittest.TestCase):
         elem = self.driver.find_element_by_name("password")
         elem.send_keys(self.auth[1])
         elem.send_keys(Keys.RETURN)
-        time.sleep(1)
+        time.sleep(2)
 
         sel = "#comments.grid tr:first-child td:first-child a"
         elem = self.driver.find_element_by_css_selector(sel)
         self.driver.get(elem.get_attribute("href"))
         self.wait_for("Status:")
 
+    @rube.expects_fedmsg('stg.bodhi.update.comment')
     def test_update_comment(self):
         self.driver.get(self.base + "/login")
         eq_("Login", self.driver.title)

@@ -1,3 +1,4 @@
 vault
 selenium
 nose
+pyzmq<13.0
