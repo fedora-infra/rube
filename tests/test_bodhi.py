@@ -27,21 +27,29 @@ from nose.tools import eq_
 
 from utils import prompt_for_auth
 
+driver = None
+
+def setUp():
+    global driver
+    driver = webdriver.Firefox()
+
+def tearDown():
+    global driver
+    driver.close()
+
 
 class TestBodhi(unittest.TestCase):
     timeout = 10
     base = "https://admin.stg.fedoraproject.org/updates"
 
     def setUp(self):
+        global driver
         self.auth = prompt_for_auth("FAS")
-        self.driver = webdriver.Firefox()
+        self.driver = driver
 
     def tearDown(self):
-        try:
-            self.driver.get(self.base + "/logout")
-            self.wait_for("You have successfully logged out.")
-        finally:
-            self.driver.close()
+        self.driver.get(self.base + "/logout")
+        self.wait_for("You have successfully logged out.")
 
     def wait_for(self, target):
         wait = ui.WebDriverWait(self.driver, self.timeout)
