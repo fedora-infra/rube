@@ -16,12 +16,13 @@
 # Authors:
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
-#
+
 from selenium import webdriver
 import unittest
 from nose.tools import eq_
 
 from utils import prompt_for_auth
+
 
 class TestKoji(unittest.TestCase):
     def setUp(self):
