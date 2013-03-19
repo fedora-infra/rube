@@ -16,15 +16,15 @@
 # Authors:
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
-
+#
 from selenium import webdriver
 import unittest
-from nose.tools import eq_
+from nose.tools import assert_in
 
 from utils import prompt_for_auth
 
 
-class TestKoji(unittest.TestCase):
+class TestFPaste(unittest.TestCase):
     def setUp(self):
         self.auth = prompt_for_auth("FAS")
         self.driver = webdriver.Firefox()
@@ -33,5 +33,5 @@ class TestKoji(unittest.TestCase):
         self.driver.close()
 
     def test_title(self):
-        self.driver.get("http://koji.stg.fedoraproject.org/koji/")
-        eq_("Build System Info | koji", self.driver.title)
+        self.driver.get("http://paste.stg.fedoraproject.org/")
+        assert_in("New paste", self.driver.title)

@@ -24,7 +24,7 @@ from nose.tools import eq_
 from utils import prompt_for_auth
 
 
-class TestKoji(unittest.TestCase):
+class TestPkgDb(unittest.TestCase):
     def setUp(self):
         self.auth = prompt_for_auth("FAS")
         self.driver = webdriver.Firefox()
@@ -33,5 +33,5 @@ class TestKoji(unittest.TestCase):
         self.driver.close()
 
     def test_title(self):
-        self.driver.get("http://koji.stg.fedoraproject.org/koji/")
-        eq_("Build System Info | koji", self.driver.title)
+        self.driver.get("https://admin.stg.fedoraproject.org/pkgdb")
+        eq_("Fedora Package Database", self.driver.title)
