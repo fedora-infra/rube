@@ -33,6 +33,6 @@ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
 PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License along
-with Rube. If not, see `<http://www.gnu.org/licenses/>.`_
+with Rube. If not, see `gnu.org/licenses <http://www.gnu.org/licenses/>.`_
 
 .. image:: https://www.gnu.org/graphics/agplv3-155x51.png
