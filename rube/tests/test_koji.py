@@ -17,21 +17,18 @@
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
 
-from selenium import webdriver
 import unittest
 from nose.tools import eq_
 
+from rube import get_driver
 from utils import prompt_for_auth
 
 
-class TestPkgs(unittest.TestCase):
+class TestKoji(unittest.TestCase):
     def setUp(self):
         self.auth = prompt_for_auth("FAS")
-        self.driver = webdriver.Firefox()
-
-    def tearDown(self):
-        self.driver.close()
+        self.driver = get_driver()
 
     def test_title(self):
-        self.driver.get("http://pkgs.stg.fedoraproject.org/cgit")
-        eq_("Fedora Project Packages GIT repositories", self.driver.title)
+        self.driver.get("http://koji.stg.fedoraproject.org/koji/")
+        eq_("Build System Info | koji", self.driver.title)

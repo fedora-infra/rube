@@ -16,22 +16,18 @@
 # Authors:
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
-#
-from selenium import webdriver
+
 import unittest
 from nose.tools import eq_
-
+import rube
 from utils import prompt_for_auth
 
 
-class TestHAProxy(unittest.TestCase):
+class TestPkgs(unittest.TestCase):
     def setUp(self):
         self.auth = prompt_for_auth("FAS")
-        self.driver = webdriver.Firefox()
-
-    def tearDown(self):
-        self.driver.close()
+        self.driver = rube.get_driver()
 
     def test_title(self):
-        self.driver.get("https://admin.stg.fedoraproject.org/haproxy/proxy1")
-        eq_("Statistics Report for HAProxy", self.driver.title)
+        self.driver.get("http://pkgs.stg.fedoraproject.org/cgit")
+        eq_("Fedora Project Packages GIT repositories", self.driver.title)

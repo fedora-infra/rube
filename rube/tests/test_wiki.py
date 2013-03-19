@@ -18,7 +18,6 @@
 #     Remy DeCausemaker <remyd@civx.us>
 #
 
-from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import selenium.webdriver.support.ui as ui
 
@@ -27,6 +26,7 @@ import time
 import uuid
 from nose.tools import eq_
 
+import rube
 from utils import prompt_for_auth
 
 
@@ -38,13 +38,10 @@ class TestWiki(unittest.TestCase):
 
     def setUp(self):
         self.auth = prompt_for_auth("FAS")
-        self.driver = webdriver.Firefox()
+        self.driver = rube.get_driver()
 
     def tearDown(self):
-        try:
-            self.driver.get(self.logout_url)
-        finally:
-            self.driver.close()
+        self.driver.get(self.logout_url)
 
     def wait_for(self, target):
         wait = ui.WebDriverWait(self.driver, self.timeout)

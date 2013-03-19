@@ -16,22 +16,19 @@
 # Authors:
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
-#
-from selenium import webdriver
+
 import unittest
 from nose.tools import eq_
 
+import rube
 from utils import prompt_for_auth
 
 
-class TestNagios(unittest.TestCase):
+class TestEasyFix(unittest.TestCase):
     def setUp(self):
         self.auth = prompt_for_auth("FAS")
-        self.driver = webdriver.Firefox()
-
-    def tearDown(self):
-        self.driver.close()
+        self.driver = rube.get_driver()
 
     def test_title(self):
-        self.driver.get("https://admin.stg.fedoraproject.org/nagios/")
-        eq_("Nagios Core", self.driver.title)
+        self.driver.get("https://stg.fedoraproject.org/easyfix/")
+        eq_("Fedora Project easyfix", self.driver.title)

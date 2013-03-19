@@ -17,7 +17,6 @@
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
 
-from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import selenium.webdriver.support.ui as ui
 import unittest
@@ -26,26 +25,15 @@ import time
 from nose.tools import eq_
 
 from utils import prompt_for_auth
-
-driver = None
-
-def setUp():
-    global driver
-    driver = webdriver.Firefox()
-
-def tearDown():
-    global driver
-    driver.close()
-
+import rube
 
 class TestBodhi(unittest.TestCase):
     timeout = 10
     base = "https://admin.stg.fedoraproject.org/updates"
 
     def setUp(self):
-        global driver
+        self.driver = rube.get_driver()
         self.auth = prompt_for_auth("FAS")
-        self.driver = driver
 
     def tearDown(self):
         self.driver.get(self.base + "/logout")

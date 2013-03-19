@@ -16,22 +16,18 @@
 # Authors:
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
-
-from selenium import webdriver
+#
 import unittest
-from nose.tools import eq_
-
+from nose.tools import assert_in
+import rube
 from utils import prompt_for_auth
 
 
-class TestElections(unittest.TestCase):
+class TestFPaste(unittest.TestCase):
     def setUp(self):
         self.auth = prompt_for_auth("FAS")
-        self.driver = webdriver.Firefox()
-
-    def tearDown(self):
-        self.driver.close()
+        self.driver = rube.get_driver()
 
     def test_title(self):
-        self.driver.get("https://admin.stg.fedoraproject.org/voting")
-        eq_("Fedora Elections", self.driver.title)
+        self.driver.get("http://paste.stg.fedoraproject.org/")
+        assert_in("New paste", self.driver.title)
