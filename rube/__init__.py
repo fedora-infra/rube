@@ -42,6 +42,7 @@ def get_driver():
             display = Display(visible=0, size=(800, 600))
             display.start()
         driver = webdriver.Firefox()
+        driver.implicitly_wait(60)
     return driver
 
 
