@@ -43,6 +43,7 @@ Rube currently tests the following services in staging:
 - https://pkgs.stg.fedoraproject.org/
 - https://paste.stg.fedoraproject.org/
 - https://admin.stg.fedoraproject.org/accounts
+- https://ask.stg.fedoraproject.org/questions/
 
 No Staging
 ----------
@@ -62,7 +63,6 @@ Bad Certificates
 
 Here is a list of the apps from `apps.fp.o <http://apps.fedoraproject.org>`_ that are not amenable to selenium tests due to expired certificates:
 
-- https://ask.stg.fedoraproject.org/questions/
 - https://docs.stg.fedoraproject.org/en-US/index.html
 - https://apps.stg.fedoraproject.org/busmon/
 - https://stg.fedorahosted.org/
