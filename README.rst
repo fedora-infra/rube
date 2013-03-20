@@ -68,6 +68,13 @@ Here is a list of the apps from `apps.fp.o <http://apps.fedoraproject.org>`_ tha
 - https://apps.stg.fedoraproject.org/packages/
 - https://mirrors.stg.fedoraproject.org/publiclist/
 
+Authors
+-------
+
+- `Ralph Bean <http://threebean.org>`_
+- `Remy DeCausemaker <http://decausemaker.org>`_
+- `Luke Macken <http://lewk.org>`_
+
 License
 -------
 Rube is free software: you can redistribute it and/or modify it under the terms

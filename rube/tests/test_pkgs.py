@@ -12,10 +12,6 @@
 #
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
-#
-# Authors:
-#     Ralph Bean <rbean@redhat.com>
-#     Remy DeCausemaker <remyd@civx.us>
 
 import rube
 
