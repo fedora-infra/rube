@@ -118,7 +118,7 @@ def tolerant(n=3):
                 except Exception as e:
                     if not original_exception:
                         original_exception = e
-                    if i >= n:
+                    if i == n - 1:
                         raise original_exception
 
         newfunc = nose.tools.nontrivial.make_decorator(func)(newfunc)
