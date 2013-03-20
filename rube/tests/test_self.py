@@ -11,3 +11,9 @@ def test_expects_fedmsg():
     no fedmsg message is found.
     """
     pass
+
+
+@raises(AssertionError)
+@rube.tolerant()
+def test_tolerant():
+    raise AssertionError("This should fail")
