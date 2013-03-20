@@ -74,6 +74,7 @@ Authors
 - `Ralph Bean <http://threebean.org>`_
 - `Remy DeCausemaker <http://decausemaker.org>`_
 - `Luke Macken <http://lewk.org>`_
+- `Ricky Elrod <http://elrod.me>`_
 
 License
 -------
