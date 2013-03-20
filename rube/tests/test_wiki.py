@@ -18,38 +18,19 @@
 #     Remy DeCausemaker <remyd@civx.us>
 #
 
-from selenium.webdriver.common.keys import Keys
-import selenium.webdriver.support.ui as ui
-
-import unittest
+import rube
 import time
 import uuid
+
 from nose.tools import eq_
-
-import rube
-from utils import prompt_for_auth
+from selenium.webdriver.common.keys import Keys
 
 
-class TestWiki(unittest.TestCase):
+class TestWiki(rube.RubeTest):
     base = "https://stg.fedoraproject.org/wiki"
     logout_url = "https://stg.fedoraproject.org/w/index.php" + \
         "?title=Special:UserLogout"
-    timeout = 10
-
-    def setUp(self):
-        self.auth = prompt_for_auth("FAS")
-        self.driver = rube.get_driver()
-
-    def tearDown(self):
-        self.driver.get(self.logout_url)
-
-    def wait_for(self, target):
-        wait = ui.WebDriverWait(self.driver, self.timeout)
-        wait.until(lambda d: target in d.page_source)
-
-    def test_title(self):
-        self.driver.get(self.base + "/Fedora_Project_Wiki")
-        eq_("FedoraProject", self.driver.title)
+    title = "FedoraProject"
 
     @rube.expects_fedmsg('stg.wiki.article.edit')
     def test_login_and_edit(self):

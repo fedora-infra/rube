@@ -2,13 +2,16 @@ import logging
 selenium_logger = logging.getLogger("selenium.webdriver")
 selenium_logger.setLevel(logging.INFO)
 
+import unittest
 import nose.tools.nontrivial
 import threading
-import sys
 import time
 import zmq
+import selenium.webdriver.support.ui as ui
 
 from selenium import webdriver
+from utils import prompt_for_auth
+from nose.tools import eq_
 
 driver = None
 
@@ -23,6 +26,29 @@ def get_driver():
 def tearDown():
     if driver:
         driver.close()
+
+
+class RubeTest(unittest.TestCase):
+    base = None
+    title = None
+    logout_url = None
+    timeout = 20000
+
+    def setUp(self):
+        self.driver = get_driver()
+        self.auth = prompt_for_auth("FAS")
+
+    def tearDown(self):
+        if self.logout_url:
+            self.driver.get(self.logout_url)
+
+    def wait_for(self, target):
+        wait = ui.WebDriverWait(self.driver, self.timeout)
+        wait.until(lambda d: target in d.page_source)
+
+    def test_title(self):
+        self.driver.get(self.base)
+        eq_(self.title, self.driver.title)
 
 
 class FedmsgListener(threading.Thread):

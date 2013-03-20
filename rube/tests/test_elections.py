@@ -17,34 +17,18 @@
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
 
-import time
-import unittest
-from nose.tools import eq_
-from selenium.webdriver.common.keys import Keys
-import selenium.webdriver.support.ui as ui
 import rube
-from utils import prompt_for_auth
+import time
+
+from selenium.webdriver.common.keys import Keys
 
 
-class TestElections(unittest.TestCase):
-    timeout = 20000
+class TestElections(rube.RubeTest):
     base = "https://admin.stg.fedoraproject.org/voting"
-
-    def setUp(self):
-        self.auth = prompt_for_auth("FAS")
-        self.driver = rube.get_driver()
-
-    def wait_for(self, target):
-        wait = ui.WebDriverWait(self.driver, self.timeout)
-        wait.until(lambda d: target in d.page_source)
-
-    def test_title(self):
-        self.driver.get(self.base)
-        eq_("Fedora Elections", self.driver.title)
+    title = "Fedora Elections"
 
     def test_login(self):
         self.driver.get(self.base)
-        eq_("Fedora Elections", self.driver.title)
         elem = self.driver.find_element_by_css_selector("input.button")
         elem.click()
 

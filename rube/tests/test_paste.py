@@ -17,34 +17,18 @@
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
 #
-import unittest
-import uuid
-import time
-from nose.tools import assert_in
-import selenium.webdriver.support.ui as ui
 
 import rube
-from utils import prompt_for_auth
+import uuid
+import time
 
 
-class TestFPaste(unittest.TestCase):
-    timeout = 10000
+class TestFPaste(rube.RubeTest):
+    base = "http://paste.stg.fedoraproject.org/"
+    title = u'New paste \u2022 Fedora Project Pastebin'
 
-    def setUp(self):
-        self.auth = prompt_for_auth("FAS")
-        self.driver = rube.get_driver()
-
-    def wait_for(self, target):
-        wait = ui.WebDriverWait(self.driver, self.timeout)
-        wait.until(lambda d: target in d.page_source)
-
-    def test_title(self):
+    def test_paste(self):
         self.driver.get("http://paste.stg.fedoraproject.org/")
-        assert_in("New paste", self.driver.title)
-
-    def test_title(self):
-        self.driver.get("http://paste.stg.fedoraproject.org/")
-        assert_in("New paste", self.driver.title)
 
         elem = self.driver.find_element_by_css_selector("#paste_user")
         elem.send_keys(" (Rube Goldberg)")

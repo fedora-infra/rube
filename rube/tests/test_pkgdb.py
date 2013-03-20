@@ -17,38 +17,21 @@
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
 
-from selenium.webdriver.common.keys import Keys
-import selenium.webdriver.support.ui as ui
-import unittest
-import time
-from nose.tools import eq_
 import rube
-from utils import prompt_for_auth
+import time
+
+from nose.tools import eq_
+from selenium.webdriver.common.keys import Keys
 
 
-class TestPkgDb(unittest.TestCase):
-    timeout = 10000
+class TestPkgDb(rube.RubeTest):
     base = "https://admin.stg.fedoraproject.org/pkgdb"
-
-    def setUp(self):
-        self.auth = prompt_for_auth("FAS")
-        self.driver = rube.get_driver()
-
-    def tearDown(self):
-        self.driver.get(self.base + "/logout")
-        self.wait_for("You have successfully logged out.")
-
-    def wait_for(self, target):
-        wait = ui.WebDriverWait(self.driver, self.timeout)
-        wait.until(lambda d: target in d.page_source)
-
-    def test_title(self):
-        self.driver.get(self.base)
-        eq_("Fedora Package Database", self.driver.title)
+    title = "Fedora Package Database"
 
     def test_login_and_search_for_nethack(self):
         self.driver.get(self.base + "/login")
         eq_("Login to the PackageDB", self.driver.title)
+        time.sleep(1)
         elem = self.driver.find_element_by_name("user_name")
         elem.send_keys(self.auth[0])
         elem = self.driver.find_element_by_name("password")

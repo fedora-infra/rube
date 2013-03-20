@@ -17,36 +17,18 @@
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
 
-from selenium.webdriver.common.keys import Keys
-import selenium.webdriver.support.ui as ui
-import unittest
-import uuid
+import rube
 import time
+import uuid
+
+from selenium.webdriver.common.keys import Keys
 from nose.tools import eq_
 
-from utils import prompt_for_auth
-import rube
 
-
-class TestBodhi(unittest.TestCase):
-    timeout = 10
+class TestBodhi(rube.RubeTest):
     base = "https://admin.stg.fedoraproject.org/updates"
-
-    def setUp(self):
-        self.driver = rube.get_driver()
-        self.auth = prompt_for_auth("FAS")
-
-    def tearDown(self):
-        self.driver.get(self.base + "/logout")
-        self.wait_for("You have successfully logged out.")
-
-    def wait_for(self, target):
-        wait = ui.WebDriverWait(self.driver, self.timeout)
-        wait.until(lambda d: target in d.page_source)
-
-    def test_title(self):
-        self.driver.get(self.base)
-        eq_("Fedora Update System", self.driver.title)
+    title = "Fedora Update System"
+    logout_url = base + '/logout'
 
     def test_login(self):
         self.driver.get(self.base + "/login")
@@ -85,7 +67,7 @@ class TestBodhi(unittest.TestCase):
         elem.send_keys(self.auth[1])
         elem.send_keys(Keys.RETURN)
 
-        time.sleep(1)
+        time.sleep(2)
         sel = "#comments.grid tr:first-child td:first-child a"
         elem = self.driver.find_element_by_css_selector(sel)
         self.driver.get(elem.get_attribute("href"))

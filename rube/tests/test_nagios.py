@@ -17,17 +17,9 @@
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
 #
-import unittest
-from nose.tools import eq_
 import rube
-from utils import prompt_for_auth
 
 
-class TestNagios(unittest.TestCase):
-    def setUp(self):
-        self.auth = prompt_for_auth("FAS")
-        self.driver = rube.get_driver()
-
-    def test_title(self):
-        self.driver.get("https://admin.stg.fedoraproject.org/nagios/")
-        eq_("Nagios Core", self.driver.title)
+class TestNagios(rube.RubeTest):
+    base = "https://admin.stg.fedoraproject.org/nagios/"
+    title = "Nagios Core"

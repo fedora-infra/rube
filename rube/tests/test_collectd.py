@@ -17,32 +17,16 @@
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
 #
-import unittest
-from nose.tools import eq_
-import selenium.webdriver.support.ui as ui
 
 import rube
 
-from utils import prompt_for_auth
 
-
-class TestCollectd(unittest.TestCase):
-    timeout = 30000
-
-    def setUp(self):
-        self.auth = prompt_for_auth("FAS")
-        self.driver = rube.get_driver()
-
-    def wait_for(self, target):
-        wait = ui.WebDriverWait(self.driver, self.timeout)
-        wait.until(lambda d: target in d.page_source)
-
-    def test_title(self):
-        self.driver.get("https://admin.stg.fedoraproject.org/collectd/")
-        eq_("collection.cgi, Version 3", self.driver.title)
+class TestCollectd(rube.RubeTest):
+    base = "https://admin.stg.fedoraproject.org/collectd/"
+    title = "collection.cgi, Version 3"
 
     def test_app01_page(self):
-        url = "https://admin.stg.fedoraproject.org/collectd/bin/index.cgi" + \
+        url = self.base + "bin/index.cgi" + \
             "?hostname=app01&plugin=apache&timespan=86400" + \
             "&action=show_selection&ok_button=OK"
         self.driver.get(url)

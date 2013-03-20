@@ -17,18 +17,10 @@
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
 #
-import unittest
-from nose.tools import eq_
 
 import rube
-from utils import prompt_for_auth
 
 
-class TestHAProxy(unittest.TestCase):
-    def setUp(self):
-        self.auth = prompt_for_auth("FAS")
-        self.driver = rube.get_driver()
-
-    def test_title(self):
-        self.driver.get("https://admin.stg.fedoraproject.org/haproxy/proxy1")
-        eq_("Statistics Report for HAProxy", self.driver.title)
+class TestHAProxy(rube.RubeTest):
+    base = "https://admin.stg.fedoraproject.org/haproxy/proxy1"
+    title = "Statistics Report for HAProxy"

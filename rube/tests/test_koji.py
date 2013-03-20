@@ -17,18 +17,9 @@
 #     Ralph Bean <rbean@redhat.com>
 #     Remy DeCausemaker <remyd@civx.us>
 
-import unittest
-from nose.tools import eq_
-
-from rube import get_driver
-from utils import prompt_for_auth
+import rube
 
 
-class TestKoji(unittest.TestCase):
-    def setUp(self):
-        self.auth = prompt_for_auth("FAS")
-        self.driver = get_driver()
-
-    def test_title(self):
-        self.driver.get("http://koji.stg.fedoraproject.org/koji/")
-        eq_("Build System Info | koji", self.driver.title)
+class TestKoji(rube.RubeTest):
+    base = "http://koji.stg.fedoraproject.org/koji"
+    title = "Build System Info | koji"
