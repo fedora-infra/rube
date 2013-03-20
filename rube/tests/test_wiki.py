@@ -27,6 +27,7 @@ class TestWiki(rube.RubeTest):
         "?title=Special:UserLogout"
     title = "FedoraProject"
 
+    @rube.tolerant()
     @rube.expects_fedmsg('stg.wiki.article.edit')
     def test_login_and_edit(self):
         self.driver.get(self.base + "/Fedora_Project_Wiki")

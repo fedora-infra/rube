@@ -26,6 +26,7 @@ class TestBodhi(rube.RubeTest):
     title = "Fedora Update System"
     logout_url = base + '/logout'
 
+    @rube.tolerant()
     def test_login(self):
         self.driver.get(self.base + "/login")
         eq_("Login", self.driver.title)
@@ -36,6 +37,7 @@ class TestBodhi(rube.RubeTest):
         elem.send_keys(Keys.RETURN)
         self.wait_for("Logout")
 
+    @rube.tolerant()
     def test_update_view(self):
         self.driver.get(self.base + "/login")
         eq_("Login", self.driver.title)
@@ -52,6 +54,7 @@ class TestBodhi(rube.RubeTest):
         self.driver.get(elem.get_attribute("href"))
         self.wait_for("Status:")
 
+    @rube.tolerant()
     @rube.expects_fedmsg('stg.bodhi.update.comment')
     def test_update_comment(self):
         self.driver.get(self.base + "/login")

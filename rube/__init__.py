@@ -23,7 +23,7 @@ from nose.tools import eq_
 
 from testconfig import config
 
-from utils import prompt_for_auth, expects_fedmsg
+from utils import prompt_for_auth, expects_fedmsg, tolerant
 
 selenium_logger = logging.getLogger("selenium.webdriver")
 selenium_logger.setLevel(logging.INFO)
@@ -70,9 +70,10 @@ class RubeTest(unittest.TestCase):
         wait = ui.WebDriverWait(self.driver, self.timeout)
         wait.until(lambda d: target in d.page_source)
 
+    @tolerant()
     def test_title(self):
         self.driver.get(self.base)
         eq_(self.title, self.driver.title)
 
 
-__all__ = ['RubeTest', 'expects_fedmsg', 'get_driver']
+__all__ = ['RubeTest', 'expects_fedmsg', 'tolerant', 'get_driver']

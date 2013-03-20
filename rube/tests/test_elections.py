@@ -23,6 +23,7 @@ class TestElections(rube.RubeTest):
     base = "https://admin.stg.fedoraproject.org/voting"
     title = "Fedora Elections"
 
+    @rube.tolerant()
     def test_login(self):
         self.driver.get(self.base)
         elem = self.driver.find_element_by_css_selector("input.button")

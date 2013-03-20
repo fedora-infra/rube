@@ -24,6 +24,7 @@ class TestPkgDb(rube.RubeTest):
     base = "https://admin.stg.fedoraproject.org/pkgdb"
     title = "Fedora Package Database"
 
+    @rube.tolerant()
     def test_search_for_nethack(self):
         package_name = "nethack"
         self.driver.get(self.base)
@@ -39,6 +40,7 @@ class TestPkgDb(rube.RubeTest):
         self.driver.get(elem.get_attribute("href"))
         self.wait_for(package_name)
 
+    @rube.tolerant()
     @rube.expects_fedmsg('stg.pkgdb.acl.request.toggle')
     def test_login_request_acls(self):
         package_name = "ruby"  # lol

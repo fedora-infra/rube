@@ -26,6 +26,7 @@ class TestFas(rube.RubeTest):
     logout_url = "https://admin.stg.fedoraproject.org/accounts/logout"
     title = "Welcome to FAS2"
 
+    @rube.tolerant()
     @rube.expects_fedmsg('stg.fas.user.update')
     def test_login_and_edit_account(self):
         self.driver.get(self.base)

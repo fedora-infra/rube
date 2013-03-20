@@ -22,6 +22,7 @@ class TestFPaste(rube.RubeTest):
     base = "http://paste.stg.fedoraproject.org/"
     title = u'New paste \u2022 Fedora Project Pastebin'
 
+    @rube.tolerant()
     def test_paste(self):
         self.driver.get("http://paste.stg.fedoraproject.org/")
 
