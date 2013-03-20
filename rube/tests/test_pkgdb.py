@@ -24,7 +24,25 @@ class TestPkgDb(rube.RubeTest):
     base = "https://admin.stg.fedoraproject.org/pkgdb"
     title = "Fedora Package Database"
 
-    def test_login_and_search_for_nethack(self):
+    def test_search_for_nethack(self):
+        package_name = "nethack"
+        self.driver.get(self.base)
+
+        elem = self.driver.find_element_by_name("pattern")
+        elem.send_keys(package_name)
+        elem.send_keys(Keys.RETURN)
+
+        time.sleep(3)
+        self.wait_for(package_name)
+        sel = "a.PackageName:first-child"
+        elem = self.driver.find_element_by_css_selector(sel)
+        self.driver.get(elem.get_attribute("href"))
+        self.wait_for(package_name)
+
+    @rube.expects_fedmsg('stg.pkgdb.acl.request.toggle')
+    def test_login_request_acls(self):
+        package_name = "ruby"  # lol
+
         self.driver.get(self.base + "/login")
         eq_("Login to the PackageDB", self.driver.title)
         time.sleep(1)
@@ -37,12 +55,28 @@ class TestPkgDb(rube.RubeTest):
 
         time.sleep(1)
         elem = self.driver.find_element_by_name("pattern")
-        elem.send_keys("nethack")
+        elem.send_keys(package_name)
         elem.send_keys(Keys.RETURN)
 
         time.sleep(3)
-        self.wait_for("nethack")
+        self.wait_for(package_name)
         sel = "a.PackageName:first-child"
         elem = self.driver.find_element_by_css_selector(sel)
         self.driver.get(elem.get_attribute("href"))
-        self.wait_for("nethack")
+        self.wait_for(package_name)
+
+        elem = self.driver.find_element_by_css_selector(".addMyselfButton")
+        elem.click()
+        time.sleep(0.1)
+
+        elem = self.driver.find_element_by_css_selector(".aclPresentBox")
+        elem.click()
+        time.sleep(0.1)
+        self.wait_for("Approved")
+
+        elem = self.driver.find_element_by_css_selector(".aclPresentBox")
+        elem.click()
+        time.sleep(0.1)
+        self.wait_for("Obsolete")
+
+
