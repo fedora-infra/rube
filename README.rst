@@ -61,13 +61,7 @@ Here is a list of all the sites that do not have a staging equivalent from `apps
 - http://lists.fedoraproject.org/
 - https://retrace.fedoraproject.org/faf/summary/
 - http://qa.fedoraproject.org/blockerbugs
-
-Bad Certificates
-----------------
-
-Here is a list of the apps from `apps.fp.o <http://apps.fedoraproject.org>`_ that are not amenable to selenium tests due to expired certificates:
-
-- https://mirrors.stg.fedoraproject.org/publiclist/
+- https://mirrors.fedoraproject.org/publiclist/
 
 Authors
 -------
