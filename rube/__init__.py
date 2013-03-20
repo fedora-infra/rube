@@ -17,6 +17,8 @@ import logging
 import unittest
 import selenium.webdriver.support.ui as ui
 
+from selenium.webdriver.support.expected_conditions import title_is
+
 from pyvirtualdisplay import Display
 from selenium import webdriver
 from nose.tools import eq_
@@ -73,7 +75,7 @@ class RubeTest(unittest.TestCase):
     @tolerant()
     def test_title(self):
         self.driver.get(self.base)
-        eq_(self.title, self.driver.title)
+        assert title_is(self.title), self.driver.title
 
 
 __all__ = ['RubeTest', 'expects_fedmsg', 'tolerant', 'get_driver']
