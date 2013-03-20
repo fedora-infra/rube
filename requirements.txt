@@ -2,3 +2,4 @@ vault
 selenium
 nose
 pyzmq<13.0
+nose-timer
