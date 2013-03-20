@@ -26,6 +26,12 @@ Running
     $ pip install -r requirements.txt
     $ nosetests
 
+.. note:: Running the tests will open up Firefox in X.
+
+   You can run the tests in headless mode by setting ``headless=1``
+   in setup.cfg.  Doing so will require that you have
+   ``xorg-x11-server-Xvfb`` installed via yum, however.
+
 Covered Services
 ----------------
 

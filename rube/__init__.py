@@ -17,28 +17,39 @@ import logging
 import unittest
 import selenium.webdriver.support.ui as ui
 
+from pyvirtualdisplay import Display
 from selenium import webdriver
 from nose.tools import eq_
+
+from testconfig import config
 
 from utils import prompt_for_auth, expects_fedmsg
 
 selenium_logger = logging.getLogger("selenium.webdriver")
 selenium_logger.setLevel(logging.INFO)
 
+display = None
 driver = None
 
 
 def get_driver():
+    global display
     global driver
     if not driver:
+        if int(config.get('xconfig', {}).get('headless', 0)):
+            display = Display(visible=0, size=(800, 600))
+            display.start()
         driver = webdriver.Firefox()
     return driver
 
 
 def tearDown():
+    global display
     global driver
     if driver:
         driver.close()
+    if display:
+        display.stop()
 
 
 class RubeTest(unittest.TestCase):
