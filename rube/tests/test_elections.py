@@ -14,7 +14,6 @@
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
 import rube
-import time
 
 from selenium.webdriver.common.keys import Keys
 
@@ -35,5 +34,4 @@ class TestElections(rube.RubeTest):
         elem.send_keys(self.auth[1])
         elem.send_keys(Keys.RETURN)
 
-        time.sleep(2)
         self.wait_for("Welcome, %s" % self.auth[0])

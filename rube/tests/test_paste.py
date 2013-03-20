@@ -15,7 +15,6 @@
 
 import rube
 import uuid
-import time
 
 
 class TestFPaste(rube.RubeTest):
@@ -41,7 +40,6 @@ class TestFPaste(rube.RubeTest):
         elem.click()
         #elem.submit()
 
-        time.sleep(1)
         self.wait_for("Your paste has been saved")
 
         sel = "div.alert.stretch.visible.alert-green a:last-child"

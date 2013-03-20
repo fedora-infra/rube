@@ -14,7 +14,6 @@
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
 import rube
-import time
 
 from nose.tools import eq_
 from selenium.webdriver.common.keys import Keys
@@ -33,7 +32,6 @@ class TestPkgDb(rube.RubeTest):
         elem.send_keys(package_name)
         elem.send_keys(Keys.RETURN)
 
-        time.sleep(3)
         self.wait_for(package_name)
         sel = "a.PackageName:first-child"
         elem = self.driver.find_element_by_css_selector(sel)
@@ -47,7 +45,6 @@ class TestPkgDb(rube.RubeTest):
 
         self.driver.get(self.base + "/login")
         eq_("Login to the PackageDB", self.driver.title)
-        time.sleep(1)
         elem = self.driver.find_element_by_name("user_name")
         elem.send_keys(self.auth[0])
         elem = self.driver.find_element_by_name("password")
@@ -55,12 +52,10 @@ class TestPkgDb(rube.RubeTest):
         elem.send_keys(Keys.RETURN)
         self.wait_for("The Fedora Project is maintained")
 
-        time.sleep(1)
         elem = self.driver.find_element_by_name("pattern")
         elem.send_keys(package_name)
         elem.send_keys(Keys.RETURN)
 
-        time.sleep(3)
         self.wait_for(package_name)
         sel = "a.PackageName:first-child"
         elem = self.driver.find_element_by_css_selector(sel)
@@ -69,16 +64,13 @@ class TestPkgDb(rube.RubeTest):
 
         elem = self.driver.find_element_by_css_selector(".addMyselfButton")
         elem.click()
-        time.sleep(0.1)
 
         elem = self.driver.find_element_by_css_selector(".aclPresentBox")
         elem.click()
-        time.sleep(0.1)
         self.wait_for("Approved")
 
         elem = self.driver.find_element_by_css_selector(".aclPresentBox")
         elem.click()
-        time.sleep(0.1)
         self.wait_for("Obsolete")
 
 

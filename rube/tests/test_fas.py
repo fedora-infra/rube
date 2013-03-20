@@ -14,7 +14,6 @@
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
 import rube
-import time
 import uuid
 
 from nose.tools import eq_
@@ -34,7 +33,6 @@ class TestFas(rube.RubeTest):
         elem = self.driver.find_element_by_link_text("Log In")
         elem.click()
 
-        time.sleep(1)
         eq_("Login to the Fedora Accounts System", self.driver.title)
         elem = self.driver.find_element_by_name("user_name")
         elem.send_keys(self.auth[0])
@@ -43,16 +41,13 @@ class TestFas(rube.RubeTest):
         elem = self.driver.find_element_by_name("login")
         elem.send_keys(Keys.ENTER)
 
-        time.sleep(1)
         eq_("Fedora Accounts System", self.driver.title)
 
         elem = self.driver.find_element_by_link_text("My Account")
         elem.click()
-        time.sleep(1)
 
         elem = self.driver.find_element_by_link_text("(edit)")
         elem.click()
-        time.sleep(1)
 
         elem = self.driver.find_element_by_name("comments")
         elem.send_keys(Keys.PAGE_DOWN)
@@ -63,5 +58,4 @@ class TestFas(rube.RubeTest):
             "/html/body/div/div[4]/div[2]/form/div[15]/input")
         elem.submit()
 
-        time.sleep(1)
         self.wait_for(tag)

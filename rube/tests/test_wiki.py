@@ -14,7 +14,6 @@
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
 import rube
-import time
 import uuid
 
 from nose.tools import eq_
@@ -35,7 +34,6 @@ class TestWiki(rube.RubeTest):
         elem = self.driver.find_element_by_id("pt-login")
         elem.click()
 
-        time.sleep(1)
         eq_("Log in - FedoraProject", self.driver.title)
         elem = self.driver.find_element_by_id("wpName1")
         elem.send_keys(self.auth[0])
@@ -44,14 +42,12 @@ class TestWiki(rube.RubeTest):
         elem = self.driver.find_element_by_id("wpLoginAttempt")
         elem.submit()
 
-        time.sleep(1)
         eq_("FedoraProject", self.driver.title)
 
         self.driver.get(
             "https://stg.fedoraproject.org/wiki/Rube_Test_Page")
         elem = self.driver.find_element_by_id("ca-edit")
         elem.click()
-        time.sleep(1)
 
         elem = self.driver.find_element_by_id("wpTextbox1")
         elem.send_keys(Keys.PAGE_DOWN)
@@ -61,5 +57,4 @@ class TestWiki(rube.RubeTest):
         elem = self.driver.find_element_by_id("wpSave")
         elem.submit()
 
-        time.sleep(1)
         self.wait_for(tag)

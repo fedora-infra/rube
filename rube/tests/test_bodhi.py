@@ -14,7 +14,6 @@
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
 import rube
-import time
 import uuid
 
 from selenium.webdriver.common.keys import Keys
@@ -47,7 +46,6 @@ class TestBodhi(rube.RubeTest):
         elem = self.driver.find_element_by_name("password")
         elem.send_keys(self.auth[1])
         elem.send_keys(Keys.RETURN)
-        time.sleep(2)
 
         sel = "#comments.grid tr:first-child td:first-child a"
         elem = self.driver.find_element_by_css_selector(sel)
@@ -66,7 +64,6 @@ class TestBodhi(rube.RubeTest):
         elem.send_keys(self.auth[1])
         elem.send_keys(Keys.RETURN)
 
-        time.sleep(2)
         sel = "#comments.grid tr:first-child td:first-child a"
         elem = self.driver.find_element_by_css_selector(sel)
         self.driver.get(elem.get_attribute("href"))
@@ -75,7 +72,6 @@ class TestBodhi(rube.RubeTest):
         elem = self.driver.find_element_by_css_selector(sel)
         elem.click()
 
-        time.sleep(1)
         sel = "#form_text"
         elem = self.driver.find_element_by_css_selector(sel)
         tag = str(uuid.uuid4())
@@ -85,5 +81,4 @@ class TestBodhi(rube.RubeTest):
         elem = self.driver.find_element_by_css_selector(sel)
         elem.submit()
 
-        time.sleep(1)
         self.wait_for(tag)
