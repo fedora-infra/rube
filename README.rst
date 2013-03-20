@@ -46,7 +46,7 @@ Rube currently tests the following services in staging:
 - https://ask.stg.fedoraproject.org/questions/
 - https://docs.stg.fedoraproject.org/en-US/index.html
 - https://apps.stg.fedoraproject.org/busmon/
-- https://stg.fedorahosted.org/
+- https://stg.fedoraproject.org/
 - https://apps.stg.fedoraproject.org/packages/
 
 No Staging
