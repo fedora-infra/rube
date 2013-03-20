@@ -58,7 +58,8 @@ Rube currently tests the following services in staging:
 No Staging
 ----------
 
-Here is a list of all the sites that do not have a staging equivalent from `apps.fp.o https://apps.fedoraproject.org`_.
+Here is a list of all the sites that do not have a staging equivalent from
+`apps.fp.o https://apps.fedoraproject.org`_.
 
 - https://bugzilla.redhat.com/
 - http://status.fedoraproject.org/
