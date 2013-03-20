@@ -42,6 +42,7 @@ Rube currently tests the following services in staging:
 - https://stg.fedoraproject.org/wiki
 - https://pkgs.stg.fedoraproject.org/
 - https://paste.stg.fedoraproject.org/
+- https://admin.stg.fedoraproject.org/accounts
 
 No Staging
 ----------
