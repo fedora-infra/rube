@@ -29,6 +29,7 @@ from utils import prompt_for_auth
 class TestElections(unittest.TestCase):
     timeout = 20000
     base = "https://admin.stg.fedoraproject.org/voting"
+
     def setUp(self):
         self.auth = prompt_for_auth("FAS")
         self.driver = rube.get_driver()

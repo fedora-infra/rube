@@ -12,15 +12,18 @@ from selenium import webdriver
 
 driver = None
 
+
 def get_driver():
     global driver
     if not driver:
         driver = webdriver.Firefox()
     return driver
 
+
 def tearDown():
     if driver:
         driver.close()
+
 
 class FedmsgListener(threading.Thread):
     """ A background thread that listens for fedmsg messages on a given topic.
@@ -53,6 +56,7 @@ class FedmsgListener(threading.Thread):
             if time.time() - start > self.timeout:
                 self.die = True
 
+
 def expects_fedmsg(topic, timeout=20000):
     """ A decorator that will cause a test to fail if it does not
     produce a fedmsg message that *contains* the topic given here.
@@ -60,6 +64,7 @@ def expects_fedmsg(topic, timeout=20000):
 
     def decorate(func):
         name = func.__name__
+
         def newfunc(*args, **kw):
             t = FedmsgListener(topic, timeout)
             t.start()

@@ -27,6 +27,7 @@ from nose.tools import eq_
 from utils import prompt_for_auth
 import rube
 
+
 class TestBodhi(unittest.TestCase):
     timeout = 10
     base = "https://admin.stg.fedoraproject.org/updates"
