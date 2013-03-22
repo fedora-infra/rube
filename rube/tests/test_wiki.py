@@ -16,8 +16,8 @@
 import rube
 import uuid
 
-from nose.tools import eq_
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.expected_conditions import title_is
 
 
 class TestWiki(rube.RubeTest):
@@ -30,11 +30,11 @@ class TestWiki(rube.RubeTest):
     @rube.expects_fedmsg('stg.wiki.article.edit')
     def test_login_and_edit(self):
         self.driver.get(self.base + "/Fedora_Project_Wiki")
-        eq_("FedoraProject", self.driver.title)
+        assert title_is(self.title), self.driver.title
         elem = self.driver.find_element_by_id("pt-login")
         elem.click()
 
-        eq_("Log in - FedoraProject", self.driver.title)
+        assert title_is("Log in - " + self.title), self.driver.title
         elem = self.driver.find_element_by_id("wpName1")
         elem.send_keys(self.auth[0])
         elem = self.driver.find_element_by_id("wpPassword1")
@@ -42,7 +42,7 @@ class TestWiki(rube.RubeTest):
         elem = self.driver.find_element_by_id("wpLoginAttempt")
         elem.submit()
 
-        eq_("FedoraProject", self.driver.title)
+        assert title_is(self.title), self.driver.title
 
         self.driver.get(
             "https://stg.fedoraproject.org/wiki/Rube_Test_Page")

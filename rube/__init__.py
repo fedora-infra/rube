@@ -21,7 +21,6 @@ from selenium.webdriver.support.expected_conditions import title_is
 
 from pyvirtualdisplay import Display
 from selenium import webdriver
-from nose.tools import eq_
 
 from testconfig import config
 

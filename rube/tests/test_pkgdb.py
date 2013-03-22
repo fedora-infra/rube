@@ -15,8 +15,8 @@
 
 import rube
 
-from nose.tools import eq_
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.expected_conditions import title_is
 
 
 class TestPkgDb(rube.RubeTest):
@@ -44,7 +44,7 @@ class TestPkgDb(rube.RubeTest):
         package_name = "ruby"  # lol
 
         self.driver.get(self.base + "/login")
-        eq_("Login to the PackageDB", self.driver.title)
+        assert title_is("Login to the PackageDB"), self.driver.title
         elem = self.driver.find_element_by_name("user_name")
         elem.send_keys(self.auth[0])
         elem = self.driver.find_element_by_name("password")

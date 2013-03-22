@@ -16,8 +16,8 @@
 import rube
 import uuid
 
-from nose.tools import eq_
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.expected_conditions import title_is
 
 
 class TestFas(rube.RubeTest):
@@ -29,11 +29,12 @@ class TestFas(rube.RubeTest):
     @rube.expects_fedmsg('stg.fas.user.update')
     def test_login_and_edit_account(self):
         self.driver.get(self.base)
-        eq_(self.title, self.driver.title)
+        assert title_is(self.title), self.driver.title
         elem = self.driver.find_element_by_link_text("Log In")
         elem.click()
 
-        eq_("Login to the Fedora Accounts System", self.driver.title)
+        title = "Login to the Fedora Accounts System"
+        assert title_is(title), self.driver.title
         elem = self.driver.find_element_by_name("user_name")
         elem.send_keys(self.auth[0])
         elem = self.driver.find_element_by_name("password")
@@ -41,7 +42,8 @@ class TestFas(rube.RubeTest):
         elem = self.driver.find_element_by_name("login")
         elem.send_keys(Keys.ENTER)
 
-        eq_("Fedora Accounts System", self.driver.title)
+        title = "Fedora Accounts System"
+        assert title_is(title), self.driver.title
 
         elem = self.driver.find_element_by_link_text("My Account")
         elem.click()

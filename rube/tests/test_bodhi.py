@@ -17,7 +17,7 @@ import rube
 import uuid
 
 from selenium.webdriver.common.keys import Keys
-from nose.tools import eq_
+from selenium.webdriver.support.expected_conditions import title_is
 
 
 class TestBodhi(rube.RubeTest):
@@ -28,7 +28,7 @@ class TestBodhi(rube.RubeTest):
     @rube.tolerant()
     def test_login(self):
         self.driver.get(self.base + "/login")
-        eq_("Login", self.driver.title)
+        assert title_is("Login"), self.driver.title
         elem = self.driver.find_element_by_name("user_name")
         elem.send_keys(self.auth[0])
         elem = self.driver.find_element_by_name("password")
@@ -39,7 +39,7 @@ class TestBodhi(rube.RubeTest):
     @rube.tolerant()
     def test_update_view(self):
         self.driver.get(self.base + "/login")
-        eq_("Login", self.driver.title)
+        assert title_is("Login"), self.driver.title
 
         elem = self.driver.find_element_by_name("user_name")
         elem.send_keys(self.auth[0])
@@ -56,7 +56,7 @@ class TestBodhi(rube.RubeTest):
     @rube.expects_fedmsg('stg.bodhi.update.comment')
     def test_update_comment(self):
         self.driver.get(self.base + "/login")
-        eq_("Login", self.driver.title)
+        assert title_is("Login"), self.driver.title
 
         elem = self.driver.find_element_by_name("user_name")
         elem.send_keys(self.auth[0])
