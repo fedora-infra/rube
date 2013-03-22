@@ -62,6 +62,7 @@ class RubeTest(unittest.TestCase):
 
     def setUp(self):
         self.driver = get_driver()
+        self.driver.delete_all_cookies()
         self.auth = prompt_for_auth("FAS")
 
     def tearDown(self):
