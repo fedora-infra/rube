@@ -15,7 +15,19 @@
 
 import rube
 
+from selenium.webdriver.common.keys import Keys
+
 
 class TestPackages(rube.RubeTest):
     base = "https://apps.stg.fedoraproject.org/packages/"
     title = "Fedora Packages Search"
+
+    # If memcached is down, this will fail.
+    def test_search(self):
+        self.driver.get(self.base)
+        elem = self.driver.find_element_by_css_selector(".grid_20 input")
+        elem.send_keys("nethack")
+        elem.send_keys(Keys.RETURN)
+
+        elem = self.driver.find_element_by_css_selector(".moksha-grid-row_0 a")
+        elem.click()
