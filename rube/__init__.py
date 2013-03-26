@@ -65,7 +65,6 @@ class RubeTest(unittest.TestCase):
     # Change this in your subclass to use a different realm in gnome keyring.
     realm = "FAS"
 
-
     def setUp(self):
         self.driver = get_driver()
         self.driver.delete_all_cookies()

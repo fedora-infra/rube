@@ -72,5 +72,3 @@ class TestPkgDb(rube.RubeTest):
         elem = self.driver.find_element_by_css_selector(".aclPresentBox")
         elem.click()
         self.wait_for("Obsolete")
-
-
