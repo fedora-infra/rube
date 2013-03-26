@@ -60,10 +60,19 @@ class RubeTest(unittest.TestCase):
     logout_url = None
     timeout = 20000
 
+    # If you subclass and set this to True, then we won't prompt you for auth.
+    no_auth = False
+    # Change this in your subclass to use a different realm in gnome keyring.
+    realm = "FAS"
+
+
     def setUp(self):
         self.driver = get_driver()
         self.driver.delete_all_cookies()
-        self.auth = prompt_for_auth("FAS")
+
+        # not no_auth ~= yes auth
+        if not self.no_auth:
+            self.auth = prompt_for_auth(self.realm)
 
     def tearDown(self):
         if self.logout_url:
