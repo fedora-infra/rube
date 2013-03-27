@@ -20,6 +20,8 @@ import threading
 import time
 import zmq
 
+from functools import wraps
+
 _cache = {}
 
 
@@ -78,8 +80,7 @@ def expects_fedmsg(topic, timeout=20000):
     """
 
     def decorate(func):
-        name = func.__name__
-
+        @wraps(func)
         def newfunc(*args, **kw):
             t = FedmsgListener(topic, timeout)
             t.start()
@@ -109,8 +110,7 @@ def tolerant(n=3):
     """
 
     def decorate(func):
-        name = func.__name__
-
+        @wraps(func)
         def newfunc(*args, **kw):
             original_exception = None
             for i in range(n):
