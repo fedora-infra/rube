@@ -77,7 +77,7 @@ class RubeTest(unittest.TestCase):
 
     def tearDown(self):
         if self._testMethodName in self._no_teardown:
-            return # skip the teardown
+            return  # skip the teardown
 
         if self.logout_url:
             self.driver.get(self.logout_url)
