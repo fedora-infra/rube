@@ -24,7 +24,7 @@ from selenium import webdriver
 
 from testconfig import config
 
-from utils import prompt_for_auth, expects_fedmsg, tolerant
+from utils import prompt_for_auth, expects_fedmsg, tolerant, skip_logout
 
 selenium_logger = logging.getLogger("selenium.webdriver")
 selenium_logger.setLevel(logging.INFO)
@@ -64,6 +64,8 @@ class RubeTest(unittest.TestCase):
     no_auth = False
     # Change this in your subclass to use a different realm in gnome keyring.
     realm = "FAS"
+    # Internally used to skip logout and whatnot during teardown
+    _no_teardown = []
 
     def setUp(self):
         self.driver = get_driver()
@@ -74,6 +76,9 @@ class RubeTest(unittest.TestCase):
             self.auth = prompt_for_auth(self.realm)
 
     def tearDown(self):
+        if self._testMethodName in self._no_teardown:
+            return # skip the teardown
+
         if self.logout_url:
             self.driver.get(self.logout_url)
 

@@ -125,3 +125,19 @@ def tolerant(n=3):
         newfunc = nose.tools.nontrivial.make_decorator(func)(newfunc)
         return newfunc
     return decorate
+
+
+def skip_logout(*args, **kw):
+    """ A decorator. If wrapped test will not attempt a logout via
+    logout_url. Use this for testing negative cases such as bad credentials
+    or when login/logout is not required.
+    """
+    def decorate(func, *args, **kw):
+        @wraps(func)
+        def newfunc(*pos, **kw):
+            self = pos[0].__class__
+            self._no_teardown.append(pos[0]._testMethodName)
+            return func(*pos, **kw)
+        newfunc = nose.tools.nontrivial.make_decorator(func)(newfunc)
+        return newfunc
+    return decorate
