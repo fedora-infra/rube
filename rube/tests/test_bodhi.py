@@ -37,6 +37,18 @@ class TestBodhi(rube.RubeTest):
         self.wait_for("Logout")
 
     @rube.tolerant()
+    @rube.skip_logout()
+    def test_login_bad(self):
+        self.driver.get(self.base + "/login")
+        assert title_is("Login"), self.driver.title
+        elem = self.driver.find_element_by_name("user_name")
+        elem.send_keys(str(uuid.uuid4()))
+        elem = self.driver.find_element_by_name("password")
+        elem.send_keys(str(uuid.uuid4()))
+        elem.send_keys(Keys.RETURN)
+        self.wait_for("not correct or did not grant access to this resource")
+
+    @rube.tolerant()
     def test_update_view(self):
         self.driver.get(self.base + "/login")
         assert title_is("Login"), self.driver.title
