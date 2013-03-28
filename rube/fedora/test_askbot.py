@@ -13,9 +13,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
-import rube
+import rube.fedora
 
 
-class TestPkgs(rube.RubeTest):
-    base = "http://pkgs.stg.fedoraproject.org/cgit"
-    title = "Fedora Project Packages GIT repositories"
+class TestAskbot(rube.fedora.FedoraRubeTest):
+    base = "https://ask.stg.fedoraproject.org/questions/"
+    title = "Questions - Ask Fedora: Knowledge Base and Community Wiki"
+    no_auth = True

@@ -14,11 +14,12 @@
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
 import rube
+import rube.fedora
 
 from selenium.webdriver.common.keys import Keys
 
 
-class TestElections(rube.RubeTest):
+class TestElections(rube.fedora.FedoraRubeTest):
     base = "https://admin.stg.fedoraproject.org/voting"
     title = "Fedora Elections"
 

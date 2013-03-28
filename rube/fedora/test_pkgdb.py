@@ -14,12 +14,13 @@
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
 import rube
+import rube.fedora
 
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.expected_conditions import title_is
 
 
-class TestPkgDb(rube.RubeTest):
+class TestPkgDb(rube.fedora.FedoraRubeTest):
     base = "https://admin.stg.fedoraproject.org/pkgdb"
     title = "Fedora Package Database"
 
@@ -39,7 +40,7 @@ class TestPkgDb(rube.RubeTest):
         self.wait_for(package_name)
 
     @rube.tolerant()
-    @rube.expects_fedmsg('stg.pkgdb.acl.request.toggle')
+    @rube.expects_zmqmsg('stg.pkgdb.acl.request.toggle')
     def test_login_request_acls(self):
         package_name = "ruby"  # lol
 

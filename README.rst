@@ -77,6 +77,7 @@ Authors
 - `Remy DeCausemaker <http://decausemaker.org>`_
 - `Luke Macken <http://lewk.org>`_
 - `Ricky Elrod <http://elrod.me>`_
+- `Greg Jurman <https://github.com/gregjurman>`_
 
 License
 -------

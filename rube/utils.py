@@ -21,6 +21,7 @@ import time
 import zmq
 
 from functools import wraps
+from testconfig import config
 
 _cache = {}
 
@@ -42,8 +43,8 @@ def prompt_for_auth(service):
     return username, password
 
 
-class FedmsgListener(threading.Thread):
-    """ A background thread that listens for fedmsg messages on a given topic.
+class ZmqmsgListener(threading.Thread):
+    """ A background thread that listens for ZeroMQ messages on a given topic.
     Sets a ``success`` flag to True if it sees such a message.
     """
 
@@ -52,13 +53,16 @@ class FedmsgListener(threading.Thread):
         self.timeout = timeout
         self.success = False
         self.die = False
-        super(FedmsgListener, self).__init__()
+        super(ZmqmsgListener, self).__init__()
 
     def run(self):
         start = time.time()
         ctx = zmq.Context()
         s = ctx.socket(zmq.SUB)
-        endpoint = "tcp://stg.fedoraproject.org:9940"
+        if not config.get('zeromq', {}).get('endpoint', None):
+            raise AttributeError(
+                "ZeroMQ endpoint not defined, but is required for testing")
+        endpoint = str(config.get('zeromq', {}).get('endpoint', ""))
         s.connect(endpoint)
         s.setsockopt(zmq.SUBSCRIBE, '')
         poller = zmq.Poller()
@@ -74,15 +78,15 @@ class FedmsgListener(threading.Thread):
                 self.die = True
 
 
-def expects_fedmsg(topic, timeout=20000):
+def expects_zmqmsg(topic, timeout=20000):
     """ A decorator that will cause a test to fail if it does not
-    produce a fedmsg message that *contains* the topic given here.
+    produce a ZeroMQ message that *contains* the topic given here.
     """
 
     def decorate(func):
         @wraps(func)
         def newfunc(*args, **kw):
-            t = FedmsgListener(topic, timeout)
+            t = ZmqmsgListener(topic, timeout)
             t.start()
 
             try:

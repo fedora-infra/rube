@@ -16,6 +16,5 @@
 import rube
 
 
-class TestAskbot(rube.RubeTest):
-    base = "https://ask.stg.fedoraproject.org/questions/"
-    title = "Questions - Ask Fedora: Knowledge Base and Community Wiki"
+class FedoraRubeTest(rube.RubeTest):
+    realm = "FAS"

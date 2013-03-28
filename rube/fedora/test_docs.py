@@ -13,9 +13,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
-import rube
+import rube.fedora
 
 
-class TestHAProxy(rube.RubeTest):
-    base = "https://admin.stg.fedoraproject.org/haproxy/proxy1"
-    title = "Statistics Report for HAProxy"
+class TestDocs(rube.fedora.FedoraRubeTest):
+    base = "https://docs.stg.fedoraproject.org/en-US/index.html"
+    title = "Welcome"
+    no_auth = True

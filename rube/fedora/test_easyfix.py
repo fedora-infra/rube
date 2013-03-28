@@ -13,9 +13,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
-import rube
+import rube.fedora
 
 
-class TestEasyFix(rube.RubeTest):
+class TestEasyFix(rube.fedora.FedoraRubeTest):
     base = "https://stg.fedoraproject.org/easyfix/"
     title = "Fedora Project easyfix"
+    no_auth = True

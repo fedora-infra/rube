@@ -13,17 +13,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
-import rube
+import rube.fedora
 
 
-class TestCollectd(rube.RubeTest):
-    base = "https://admin.stg.fedoraproject.org/collectd/"
-    title = "collection.cgi, Version 3"
-
-    @rube.tolerant()
-    def test_app01_page(self):
-        url = self.base + "bin/index.cgi" + \
-            "?hostname=app01&plugin=apache&timespan=86400" + \
-            "&action=show_selection&ok_button=OK"
-        self.driver.get(url)
-        self.wait_for("ApacheBytes")
+class TestNagios(rube.fedora.FedoraRubeTest):
+    base = "https://admin.stg.fedoraproject.org/nagios/"
+    title = "Nagios Core"
+    no_auth = True

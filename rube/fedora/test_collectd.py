@@ -14,20 +14,18 @@
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
 import rube
+import rube.fedora
 
-from selenium.webdriver.common.keys import Keys
 
+class TestCollectd(rube.fedora.FedoraRubeTest):
+    base = "https://admin.stg.fedoraproject.org/collectd/"
+    title = "collection.cgi, Version 3"
+    no_auth = True
 
-class TestPackages(rube.RubeTest):
-    base = "https://apps.stg.fedoraproject.org/packages/"
-    title = "Fedora Packages Search"
-
-    # If memcached is down, this will fail.
-    def test_search(self):
-        self.driver.get(self.base)
-        elem = self.driver.find_element_by_css_selector(".grid_20 input")
-        elem.send_keys("nethack")
-        elem.send_keys(Keys.RETURN)
-
-        elem = self.driver.find_element_by_css_selector(".moksha-grid-row_0 a")
-        elem.click()
+    @rube.tolerant()
+    def test_app01_page(self):
+        url = self.base + "bin/index.cgi" + \
+            "?hostname=app01&plugin=apache&timespan=86400" + \
+            "&action=show_selection&ok_button=OK"
+        self.driver.get(url)
+        self.wait_for("ApacheBytes")
