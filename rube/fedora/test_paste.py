@@ -14,10 +14,11 @@
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
 import rube
+import rube.fedora
 import uuid
 
 
-class TestFPaste(rube.RubeTest):
+class TestFPaste(rube.fedora.FedoraRubeTest):
     base = "http://paste.stg.fedoraproject.org/"
     title = u'New paste \u2022 Fedora Project Pastebin'
 

@@ -13,9 +13,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
-import rube
+import rube.fedora
 
 
-class TestDocs(rube.RubeTest):
+class TestDocs(rube.fedora.FedoraRubeTest):
     base = "https://docs.stg.fedoraproject.org/en-US/index.html"
     title = "Welcome"
+    no_auth = True

@@ -13,9 +13,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
-import rube
+import rube.fedora
 
 
-class TestKoji(rube.RubeTest):
+class TestKoji(rube.fedora.FedoraRubeTest):
     base = "http://koji.stg.fedoraproject.org/koji"
     title = "Build System Info | koji"
+    no_auth = True

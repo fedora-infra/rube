@@ -14,13 +14,14 @@
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
 import rube
+import rube.fedora
 import uuid
 
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.expected_conditions import title_is
 
 
-class TestBodhi(rube.RubeTest):
+class TestBodhi(rube.fedora.FedoraRubeTest):
     base = "https://admin.stg.fedoraproject.org/updates"
     title = "Fedora Update System"
     logout_url = base + '/logout'
@@ -65,7 +66,7 @@ class TestBodhi(rube.RubeTest):
         self.wait_for("Status:")
 
     @rube.tolerant()
-    @rube.expects_fedmsg('stg.bodhi.update.comment')
+    @rube.expects_zmqmsg('stg.bodhi.update.comment')
     def test_update_comment(self):
         self.driver.get(self.base + "/login")
         assert title_is("Login"), self.driver.title

@@ -14,20 +14,21 @@
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
 import rube
+import rube.fedora
 import uuid
 
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.expected_conditions import title_is
 
 
-class TestWiki(rube.RubeTest):
+class TestWiki(rube.fedora.FedoraRubeTest):
     base = "https://stg.fedoraproject.org/wiki"
     logout_url = "https://stg.fedoraproject.org/w/index.php" + \
         "?title=Special:UserLogout"
     title = "FedoraProject"
 
     @rube.tolerant()
-    @rube.expects_fedmsg('stg.wiki.article.edit')
+    @rube.expects_zmqmsg('stg.wiki.article.edit')
     def test_login_and_edit(self):
         self.driver.get(self.base + "/Fedora_Project_Wiki")
         assert title_is(self.title), self.driver.title

@@ -14,19 +14,20 @@
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
 import rube
+import rube.fedora
 import uuid
 
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.expected_conditions import title_is
 
 
-class TestFas(rube.RubeTest):
+class TestFas(rube.fedora.FedoraRubeTest):
     base = "https://admin.stg.fedoraproject.org/accounts"
     logout_url = "https://admin.stg.fedoraproject.org/accounts/logout"
     title = "Welcome to FAS2"
 
     @rube.tolerant()
-    @rube.expects_fedmsg('stg.fas.user.update')
+    @rube.expects_zmqmsg('stg.fas.user.update')
     def test_login_and_edit_account(self):
         self.driver.get(self.base)
         assert title_is(self.title), self.driver.title

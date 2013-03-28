@@ -14,11 +14,13 @@
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
 import rube
+import rube.fedora
 
 
-class TestCollectd(rube.RubeTest):
+class TestCollectd(rube.fedora.FedoraRubeTest):
     base = "https://admin.stg.fedoraproject.org/collectd/"
     title = "collection.cgi, Version 3"
+    no_auth = True
 
     @rube.tolerant()
     def test_app01_page(self):

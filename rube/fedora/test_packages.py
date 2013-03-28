@@ -13,14 +13,15 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
-import rube
+import rube.fedora
 
 from selenium.webdriver.common.keys import Keys
 
 
-class TestPackages(rube.RubeTest):
+class TestPackages(rube.fedora.FedoraRubeTest):
     base = "https://apps.stg.fedoraproject.org/packages/"
     title = "Fedora Packages Search"
+    no_auth = True
 
     # If memcached is down, this will fail.
     def test_search(self):

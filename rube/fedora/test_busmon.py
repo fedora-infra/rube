@@ -13,9 +13,10 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
-import rube
+import rube.fedora
 
 
-class TestBusmon(rube.RubeTest):
+class TestBusmon(rube.fedora.FedoraRubeTest):
     base = "https://apps.stg.fedoraproject.org/busmon/"
     title = "Fedora Busmon"
+    no_auth = True
