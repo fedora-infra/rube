@@ -84,6 +84,7 @@ def expects_zmqmsg(topic, timeout=20000):
     """
 
     def decorate(func):
+        name = func.__name__
         @wraps(func)
         def newfunc(*args, **kw):
             t = ZmqmsgListener(topic, timeout)
