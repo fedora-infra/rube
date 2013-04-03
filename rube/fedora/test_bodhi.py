@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
-import rube
+import rube.core
 import rube.fedora
 import uuid
 
@@ -26,7 +26,7 @@ class TestBodhi(rube.fedora.FedoraRubeTest):
     title = "Fedora Update System"
     logout_url = base + '/logout'
 
-    @rube.tolerant()
+    @rube.core.tolerant()
     def test_login(self):
         self.driver.get(self.base + "/login")
         assert title_is("Login"), self.driver.title
@@ -37,8 +37,8 @@ class TestBodhi(rube.fedora.FedoraRubeTest):
         elem.send_keys(Keys.RETURN)
         self.wait_for("Logout")
 
-    @rube.tolerant()
-    @rube.skip_logout()
+    @rube.core.tolerant()
+    @rube.core.skip_logout()
     def test_login_bad(self):
         self.driver.get(self.base + "/login")
         assert title_is("Login"), self.driver.title
@@ -49,7 +49,7 @@ class TestBodhi(rube.fedora.FedoraRubeTest):
         elem.send_keys(Keys.RETURN)
         self.wait_for("not correct or did not grant access to this resource")
 
-    @rube.tolerant()
+    @rube.core.tolerant()
     def test_update_view(self):
         self.driver.get(self.base + "/login")
         assert title_is("Login"), self.driver.title
@@ -65,8 +65,8 @@ class TestBodhi(rube.fedora.FedoraRubeTest):
         self.driver.get(elem.get_attribute("href"))
         self.wait_for("Status:")
 
-    @rube.tolerant()
-    @rube.expects_zmqmsg('stg.bodhi.update.comment')
+    @rube.core.tolerant()
+    @rube.core.expects_zmqmsg('stg.bodhi.update.comment')
     def test_update_comment(self):
         self.driver.get(self.base + "/login")
         assert title_is("Login"), self.driver.title

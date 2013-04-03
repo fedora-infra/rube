@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
-import rube
+import rube.core
 import rube.fedora
 
 from selenium.webdriver.common.keys import Keys
@@ -23,7 +23,7 @@ class TestElections(rube.fedora.FedoraRubeTest):
     base = "https://admin.stg.fedoraproject.org/voting"
     title = "Fedora Elections"
 
-    @rube.tolerant()
+    @rube.core.tolerant()
     def test_login(self):
         self.driver.get(self.base)
         elem = self.driver.find_element_by_css_selector("input.button")

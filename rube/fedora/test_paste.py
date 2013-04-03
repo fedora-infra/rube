@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
-import rube
+import rube.core
 import rube.fedora
 import uuid
 
@@ -22,7 +22,7 @@ class TestFPaste(rube.fedora.FedoraRubeTest):
     base = "http://paste.stg.fedoraproject.org/"
     title = u'New paste \u2022 Fedora Project Pastebin'
 
-    @rube.tolerant()
+    @rube.core.tolerant()
     def test_paste(self):
         self.driver.get("http://paste.stg.fedoraproject.org/")
 

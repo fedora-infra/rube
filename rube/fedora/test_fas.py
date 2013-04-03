@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
-import rube
+import rube.core
 import rube.fedora
 import uuid
 
@@ -26,8 +26,8 @@ class TestFas(rube.fedora.FedoraRubeTest):
     logout_url = "https://admin.stg.fedoraproject.org/accounts/logout"
     title = "Welcome to FAS2"
 
-    @rube.tolerant()
-    @rube.expects_zmqmsg('stg.fas.user.update')
+    @rube.core.tolerant()
+    @rube.core.expects_zmqmsg('stg.fas.user.update')
     def test_login_and_edit_account(self):
         self.driver.get(self.base)
         assert title_is(self.title), self.driver.title

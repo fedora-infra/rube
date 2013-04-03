@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
-import rube
+import rube.core
 import rube.fedora
 
 from selenium.webdriver.common.keys import Keys
@@ -24,7 +24,7 @@ class TestPkgDb(rube.fedora.FedoraRubeTest):
     base = "https://admin.stg.fedoraproject.org/pkgdb"
     title = "Fedora Package Database"
 
-    @rube.tolerant()
+    @rube.core.tolerant()
     def test_search_for_nethack(self):
         package_name = "nethack"
         self.driver.get(self.base)
@@ -39,8 +39,8 @@ class TestPkgDb(rube.fedora.FedoraRubeTest):
         self.driver.get(elem.get_attribute("href"))
         self.wait_for(package_name)
 
-    @rube.tolerant()
-    @rube.expects_zmqmsg('stg.pkgdb.acl.request.toggle')
+    @rube.core.tolerant()
+    @rube.core.expects_zmqmsg('stg.pkgdb.acl.request.toggle')
     def test_login_request_acls(self):
         package_name = "ruby"  # lol
 

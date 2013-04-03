@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Rube. If not, see <http://www.gnu.org/licenses/>.
 
-import rube
+import rube.core
 import rube.fedora
 
 
@@ -22,7 +22,7 @@ class TestCollectd(rube.fedora.FedoraRubeTest):
     title = "collection.cgi, Version 3"
     no_auth = True
 
-    @rube.tolerant()
+    @rube.core.tolerant()
     def test_app01_page(self):
         url = self.base + "bin/index.cgi" + \
             "?hostname=app01&plugin=apache&timespan=86400" + \
