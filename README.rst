@@ -1,0 +1,1 @@
+rube.core/README.rst
