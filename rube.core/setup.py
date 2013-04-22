@@ -31,7 +31,7 @@ setup(
     url="http://github.com/fedora-infra/rube/",
     author='Ralph Bean',
     author_email='rbean@redhat.com',
-    license='AGPL',
+    license='GPLv3+',
     packages=['rube', 'rube.core'],
     namespace_packages=['rube'],
     zip_safe=False,
