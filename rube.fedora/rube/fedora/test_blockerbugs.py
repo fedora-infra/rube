@@ -27,9 +27,7 @@ class TestBlockerBugs(rube.fedora.FedoraRubeTest):
 
     @rube.core.tolerant()
     def test_stuff(self):
-        self.driver.get(self.base)
-        elem = self.driver.find_element_by_css_selector('.login-link')
-        elem.click()
+        self.driver.get(self.base + "/login")
         elem = self.driver.find_element_by_name('username')
         elem.send_keys(self.auth[0])
         elem = self.driver.find_element_by_name('password')
