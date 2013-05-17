@@ -54,15 +54,18 @@ class ZmqmsgListener(threading.Thread):
         self.timeout = timeout
         self.success = False
         self.die = False
+
+        # Fail before we start if we can't actually listen.
+        if not config.get('zeromq', {}).get('endpoint', None):
+            raise AttributeError(
+                "ZeroMQ endpoint not defined, but is required for testing")
+
         super(ZmqmsgListener, self).__init__()
 
     def run(self):
         start = time.time()
         ctx = zmq.Context()
         s = ctx.socket(zmq.SUB)
-        if not config.get('zeromq', {}).get('endpoint', None):
-            raise AttributeError(
-                "ZeroMQ endpoint not defined, but is required for testing")
         endpoint = str(config.get('zeromq', {}).get('endpoint', ""))
         s.connect(endpoint)
         s.setsockopt(zmq.SUBSCRIBE, '')
