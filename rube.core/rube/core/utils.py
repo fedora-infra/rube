@@ -125,8 +125,20 @@ def tolerant(n=3):
                 except Exception as e:
                     if not original_exception:
                         original_exception = e
+
                     if i == n - 1:
                         raise original_exception
+
+                    # If we failed.  Try to reach out and grab the tearDown
+                    # function associated with this test and run it so we can
+                    # restart with a clean slate.
+                    # This is important so that if a test fails in the middle,
+                    # before we retry anything we should log out, etc.
+                    try:
+                        obj = func.im_self
+                        obj.tearDown()
+                    except:
+                        pass
 
         newfunc = nose.tools.nontrivial.make_decorator(func)(newfunc)
         return newfunc
