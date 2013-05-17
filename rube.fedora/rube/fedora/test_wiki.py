@@ -31,9 +31,10 @@ class TestWiki(rube.fedora.FedoraRubeTest):
     @rube.core.tolerant()
     @rube.core.expects_zmqmsg('stg.wiki.article.edit')
     def test_login_and_edit(self):
-        self.driver.get(self.base + "/Fedora_Project_Wiki")
+        self.driver.get(self.base)
         assert title_is(self.title), self.driver.title
-        elem = self.driver.find_element_by_id("pt-login")
+        self.wait_for('pt-login')
+        elem = self.driver.find_element_by_css_selector("#pt-login > a")
         elem.click()
 
         assert title_is("Log in - " + self.title), self.driver.title
@@ -48,7 +49,7 @@ class TestWiki(rube.fedora.FedoraRubeTest):
 
         self.driver.get(
             "https://stg.fedoraproject.org/wiki/Rube_Test_Page")
-        elem = self.driver.find_element_by_id("ca-edit")
+        elem = self.driver.find_element_by_css_selector("#ca-edit > a")
         elem.click()
 
         elem = self.driver.find_element_by_id("wpTextbox1")
@@ -56,7 +57,7 @@ class TestWiki(rube.fedora.FedoraRubeTest):
         tag = str(uuid.uuid4())
         s = "Test comment from Rube\n%s" % tag
         elem.send_keys(s)
-        elem = self.driver.find_element_by_id("wpSave")
+        elem = self.driver.find_element_by_css_selector("#wpSave")
         elem.submit()
 
         self.wait_for(tag)
