@@ -25,34 +25,54 @@ from selenium import webdriver
 
 from testconfig import config
 
-from utils import prompt_for_auth, expects_zmqmsg, tolerant, skip_logout
+from utils import (
+    prompt_for_auth,
+    expects_zmqmsg,
+    tolerant,
+    skip_logout,
+    collect_har,
+)
 
 selenium_logger = logging.getLogger("selenium.webdriver")
 selenium_logger.setLevel(logging.INFO)
 
 display = None
 driver = None
+proxy = None
 
 
-def get_driver():
+def get_driver_and_proxy():
     global display
     global driver
+    global proxy
     if not driver:
+        if int(config.get('browsermob', {}).get('collect-har', 0)):
+            from browsermobproxy import Server
+            server = Server(config['browsermob']['path'])
+            server.start()
+            proxy = server.create_proxy()
         if int(config.get('xconfig', {}).get('headless', 0)):
             display = Display(visible=0, size=(800, 600))
             display.start()
-        driver = webdriver.Firefox()
+        profile = webdriver.FirefoxProfile()
+        if proxy:
+            profile.set_proxy(proxy.selenium_proxy())
+        driver = webdriver.Firefox(firefox_profile=profile)
         driver.implicitly_wait(60)
-    return driver
+
+    return driver, proxy
 
 
 def tearDown():
     global display
     global driver
+    global proxy
     if driver:
         driver.close()
     if display:
         display.stop()
+    if proxy:
+        proxy.close()
 
 
 class RubeTest(unittest.TestCase):
@@ -69,7 +89,7 @@ class RubeTest(unittest.TestCase):
     _no_teardown = []
 
     def setUp(self):
-        self.driver = get_driver()
+        self.driver, self.proxy = get_driver_and_proxy()
         self.driver.delete_all_cookies()
 
         # not no_auth ~= yes auth
@@ -87,6 +107,7 @@ class RubeTest(unittest.TestCase):
         wait = ui.WebDriverWait(self.driver, self.timeout)
         wait.until(lambda d: target in d.page_source)
 
+    @collect_har()
     @tolerant()
     def test_title(self):
         self.driver.get(self.base)
