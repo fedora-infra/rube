@@ -147,13 +147,11 @@ def _write_harfile(namespace, har):
 
     hardir = "harfiles"
 
-    if not os.path.exists(hardir):
-        os.makedirs(hardir)
+    dirname = os.path.join(hardir, namespace)
+    if not os.path.exists(dirname):
+        os.makedirs(dirname)
 
-    fname = os.path.join(
-        hardir,
-        namespace + '-' + import_time.isoformat() + '.har'
-    )
+    fname = os.path.join(dirname, import_time.isoformat() + '.har')
 
     with open(fname, 'w') as f:
         f.write(json.dumps(har))
