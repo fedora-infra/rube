@@ -41,7 +41,6 @@ class TestFas(rube.fedora.FedoraRubeTest):
         elem.send_keys(self.auth[0])
         elem = self.driver.find_element_by_name("password")
         elem.send_keys(self.auth[1])
-        elem = self.driver.find_element_by_name("login")
         elem.send_keys(Keys.ENTER)
 
         title = "Fedora Accounts System"
