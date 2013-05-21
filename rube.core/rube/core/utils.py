@@ -120,11 +120,11 @@ def tolerant(n=3):
 
     def decorate(func):
         @wraps(func)
-        def newfunc(self, *args, **kw):
+        def newfunc(*args, **kw):
             original_exception = None
             for i in range(n):
                 try:
-                    return func(self, *args, **kw)
+                    return func(*args, **kw)
                 except Exception as e:
                     if not original_exception:
                         original_exception = e
@@ -138,7 +138,8 @@ def tolerant(n=3):
                     # This is important so that if a test fails in the middle,
                     # before we retry anything we should log out, etc.
                     try:
-                        self.tearDown()
+                        if args and hasattr(args[0], 'tearDown'):
+                            args[0].tearDown()
                     except:
                         pass
 
