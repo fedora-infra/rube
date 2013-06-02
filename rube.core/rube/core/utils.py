@@ -14,8 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Rube.  If not, see <http://www.gnu.org/licenses/>.
 
+import datetime
 import vault
 import sys
+import os
+import json
 import nose.tools.nontrivial
 import threading
 import time
@@ -25,6 +28,8 @@ from functools import wraps
 from testconfig import config
 
 _cache = {}
+
+import_time = datetime.datetime.now()
 
 
 def prompt_for_auth(service):
@@ -89,6 +94,7 @@ def expects_zmqmsg(topic, timeout=20000):
 
     def decorate(func):
         name = func.__name__
+
         @wraps(func)
         def newfunc(*args, **kw):
             t = ZmqmsgListener(topic, timeout)
@@ -145,6 +151,54 @@ def tolerant(n=3):
 
         newfunc = nose.tools.nontrivial.make_decorator(func)(newfunc)
         return newfunc
+    return decorate
+
+
+def _write_harfile(namespace, har):
+    """ Utility to write out files for the @collect_har decorator. """
+
+    hardir = "harfiles"
+
+    dirname = os.path.join(hardir, namespace)
+    if not os.path.exists(dirname):
+        os.makedirs(dirname)
+
+    fname = os.path.join(dirname, import_time.isoformat() + '.har')
+
+    with open(fname, 'w') as f:
+        f.write(json.dumps(har))
+
+    print " * Wrote", fname
+
+
+def collect_har():
+    """ A decorator.  If applied, the wrapped test will produce HAR
+    output files marked by both the provided ``namespace`` and the
+    current datetime.
+
+    This presumes that browsermob-proxy is installed and available on
+    the tested function's bound object as an attribute: ``proxy``.
+    """
+
+    def decorate(func):
+
+        @wraps(func)
+        def newfunc(self, *args, **kw):
+            namespace = self.base.replace(':', '').replace('/', '-')
+            if self.proxy:
+                self.proxy.new_har(namespace)
+
+            result = func(self, *args, **kw)
+
+            if self.proxy:
+                har = self.proxy.har()
+                _write_harfile(namespace, har)
+
+            return result
+
+        newfunc = nose.tools.nontrivial.make_decorator(func)(newfunc)
+        return newfunc
+
     return decorate
 
 

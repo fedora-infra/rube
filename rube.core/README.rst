@@ -30,6 +30,20 @@ Running
    in setup.cfg.  Doing so will require that you have
    ``xorg-x11-server-Xvfb`` installed via yum, however.
 
+.. note:: Collecting HAR files for performance metrics.
+
+   Rube will output harfile data into a ``harfiles/`` directory if
+   you turn on ``collect-har`` and specify a ``path`` to
+   `browsermob-proxy <http://bmp.lightbody.net>`_ in the
+   ``[browsermob]`` section of your setup.cfg file.
+
+   You'll also need to manually ``pip install browsermob-proxy``
+   into your virtualenv.  Note that `this patch
+   <https://github.com/AutomatedTester/browsermob-proxy-py/pull/13>`_
+   is required to collect HAR files from https sites (such as our
+   entire infrastructure).
+
+
 Covered Services
 ----------------
 
