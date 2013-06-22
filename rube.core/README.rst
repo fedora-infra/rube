@@ -105,4 +105,5 @@ PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along
 with Rube. If not, see `gnu.org/licenses <http://www.gnu.org/licenses/>`_.
 
-.. image:: https://www.gnu.org/graphics/gplv3-155x51.png
+.. image:: https://www.gnu.org/graphics/gplv3-127x51.png
+   :target: https://www.gnu.org/licenses/gpl.txt
