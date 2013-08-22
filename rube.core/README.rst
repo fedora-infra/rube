@@ -50,6 +50,15 @@ rube.core provides a number of useful decorators for your tests.
   use this to ensure that actions triggered on webapps by rube cause `fedmsg
   <http://fedmsg.com>`_ messages to be published on our staging gateway.
 
+- ``@rube.core.ensures_after(callable)`` will invoke ``callable`` after your
+  test has run, giving it a chance to raise an exception.
+
+  The common use case is to define a callable that executes a shell
+  command.  For instance, you could have a selenium test that goes to an
+  account system and applies for a dummy user's membership in a group.  After
+  that test has run, your callable could use paramiko to ssh to a machine and
+  ensure that that user now has shell access (or something).
+
 ----
 
 Running the tests will open up Firefox in X which is a bit of a pain
