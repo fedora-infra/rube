@@ -23,6 +23,10 @@ Rube is developed by the `Fedora Infrastructure team
 <https://pypi.python.org/pypi/rube.fedora>`_.  Please feel free to re-use
 ``rube.core`` as you see fit.
 
+If you are interested in *running the Fedora Infrastructure test suite*, please
+see the ``rube.fedora`` `README
+<https://github.com/fedora-infra/rube/blob/develop/rube.fedora/README.rst>`_.
+
 Features
 --------
 
