@@ -32,3 +32,24 @@ def test_expects_fedmsg():
 @rube.core.tolerant()
 def test_tolerant():
     raise AssertionError("This should fail")
+
+
+def fail():
+    assert False
+
+
+def win():
+    assert True
+
+
+@raises(AssertionError)
+@rube.core.ensures_after(fail)
+def test_after_callable_failure():
+    """ Test that the after callable correctly fails. """
+    pass
+
+
+@rube.core.ensures_after(win)
+def test_after_callable_success():
+    """ Test that the after callable doesn't give false positives. """
+    pass
