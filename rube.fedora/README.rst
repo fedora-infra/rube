@@ -23,7 +23,7 @@ Running
 
 ::
 
-    $ sudo yum install -y python-virtualenvwrapper
+    $ sudo yum install -y python-virtualenvwrapper gcc-g++
     $ git clone git://github.com/fedora-infra/rube.git
     $ cd rube
     $ mkvirtualenv rube
