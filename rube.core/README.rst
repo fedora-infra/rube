@@ -59,6 +59,10 @@ rube.core provides a number of useful decorators for your tests.
   that test has run, your callable could use paramiko to ssh to a machine and
   ensure that that user now has shell access (or something).
 
+- ``@rube.core.collect_har`` will collect HAR performance data on your
+  websites.  You have to do a little extra work (including setting up
+  browsermob-proxy) in order to get this work.  See below.
+
 ----
 
 Running the tests will open up Firefox in X which is a bit of a pain
