@@ -29,12 +29,13 @@ except:
 
 def get_description(fname='README.rst'):
     with open(fname, 'r') as f:
-        return f.read()
+        return f.read().split('.. split here\n')[1]
 
 
 def get_requirements(fname='requirements.txt'):
     with open(fname, 'r') as f:
         return f.readlines()
+
 
 setup(
     name='rube.core',
