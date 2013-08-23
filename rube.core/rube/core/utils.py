@@ -87,6 +87,36 @@ class ZmqmsgListener(threading.Thread):
                 self.die = True
 
 
+def ensures_after(after_callable):
+    """ Decorator that will execute a given function *after* the test has run.
+
+    The common use case is to define a callable that executes a shell
+    command.  For instance, you could have a selenium test that goes to an
+    account system and applies for a dummy user's membership in a group.  After
+    that test has run, your callable could use paramiko to ssh to a machine and
+    ensure that that user now has shell access (or something).  If the user
+    doesn't have access like it should, your callable should *raise an
+    exception*.
+    """
+
+    def decorate(func):
+        name = func.__name__
+
+        @wraps(func)
+        def newfunc(*args, **kw):
+            try:
+                result = func(*args, **kw)
+                after_callable()
+            except:
+                raise
+
+            return result
+
+        newfunc = nose.tools.nontrivial.make_decorator(func)(newfunc)
+        return newfunc
+    return decorate
+
+
 def expects_zmqmsg(topic, timeout=20000):
     """ A decorator that will cause a test to fail if it does not
     produce a ZeroMQ message that *contains* the topic given here.
