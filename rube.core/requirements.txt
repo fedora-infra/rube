@@ -1,7 +1,7 @@
 vault
 selenium
 nose
-pyzmq<13.0
+pyzmq
 nose-timer
 yanc
 pyvirtualdisplay
