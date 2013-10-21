@@ -39,7 +39,7 @@ def get_requirements(fname='requirements.txt'):
 
 setup(
     name='rube.core',
-    version='0.1.1',
+    version='0.1.2',
     description="A convenience layer on top of selenium",
     long_description=get_description(),
     install_requires=get_requirements(),
