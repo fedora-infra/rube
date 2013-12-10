@@ -18,6 +18,7 @@ import rube.core
 import rube.fedora
 
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.expected_conditions import title_is
 
 
 class TestBlockerBugs(rube.fedora.FedoraRubeTest):
@@ -26,16 +27,37 @@ class TestBlockerBugs(rube.fedora.FedoraRubeTest):
     logout_url = base + '/logout'
 
     @rube.core.tolerant()
-    def test_stuff(self):
-        self.driver.get(self.base + "/login")
-        elem = self.driver.find_element_by_name('username')
-        elem.send_keys(self.auth[0])
-        elem = self.driver.find_element_by_name('password')
-        elem.send_keys(self.auth[1])
-        elem.send_keys(Keys.RETURN)
+    def test_login_dance(self):
+        self.driver.get(self.base)
+        assert title_is(self.title), self.driver.title
+        self.wait_for('open source')
+
+        elem = self.driver.find_element_by_css_selector(".login-link > a")
+        elem.click()
+
+        self.do_openid_login()
+
+        # Back to blockerbugs
         self.wait_for("Logout")
 
         for i in range(5):
             selector = ".menu-bar li:nth-child(%i)" % (i + 1)
             elem = self.driver.find_element_by_css_selector(selector)
             elem.click()
+
+    def do_openid_login(self):
+        # Openid page
+        self.wait_for("Create a new account")
+        elem = self.driver.find_element_by_name('username')
+        elem.send_keys(self.auth[0])
+        elem = self.driver.find_element_by_name('password')
+        elem.send_keys(self.auth[1])
+        elem.send_keys(Keys.RETURN)
+
+        # Redirect to confirm page
+        elem = self.driver.find_element_by_name('decided_allow')
+        elem.click()
+
+        ## And again..
+        elem = self.driver.find_element_by_css_selector("input:last-child")
+        elem.click()
