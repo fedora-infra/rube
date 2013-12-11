@@ -16,6 +16,26 @@
 
 import rube.core
 
+from selenium.webdriver.common.keys import Keys
+
 
 class FedoraRubeTest(rube.core.RubeTest):
     realm = "FAS"
+
+    def do_openid_login(self, last_click=True):
+        # Openid page
+        self.wait_for("Create a new account")
+        elem = self.driver.find_element_by_name('username')
+        elem.send_keys(self.auth[0])
+        elem = self.driver.find_element_by_name('password')
+        elem.send_keys(self.auth[1])
+        elem.send_keys(Keys.RETURN)
+
+        # Redirect to confirm page
+        elem = self.driver.find_element_by_name('decided_allow')
+        elem.click()
+
+        # And again..
+        if last_click:
+            elem = self.driver.find_element_by_css_selector("input:last-child")
+            elem.click()

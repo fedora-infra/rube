@@ -20,26 +20,40 @@ import rube.fedora
 from selenium.webdriver.support.expected_conditions import title_is
 
 
-class TestBlockerBugs(rube.fedora.FedoraRubeTest):
-    base = "https://qa.stg.fedoraproject.org/blockerbugs"
-    title = "Fedora Blocker Bugs"
+class TestBadges(rube.fedora.FedoraRubeTest):
+    base = "https://badges.stg.fedoraproject.org"
+    title = "Fedora Badges (staging!)"
     logout_url = base + '/logout'
 
     @rube.core.tolerant()
     def test_login_dance(self):
         self.driver.get(self.base)
         assert title_is(self.title), self.driver.title
-        self.wait_for('open source')
+        self.wait_for('free software')
 
-        elem = self.driver.find_element_by_css_selector(".login-link > a")
-        elem.click()
+        self.driver.get(self.base + "/login")
 
-        self.do_openid_login()
+        alert = self.driver.switch_to_alert()
+        alert.accept()
+        self.do_openid_login(last_click=False)
 
-        # Back to blockerbugs
+        # Back to badges
         self.wait_for("Logout")
 
-        for i in range(5):
-            selector = ".menu-bar li:nth-child(%i)" % (i + 1)
-            elem = self.driver.find_element_by_css_selector(selector)
-            elem.click()
+        # Go to profile
+        selector = ".navbar li:nth-child(4) > a"
+        elem = self.driver.find_element_by_css_selector(selector)
+        elem.click()
+
+        # Ensure that we got to the profile.
+        self.wait_for("User Info")
+        assert "User Info" in self.driver.page_source
+
+        # Go to leaderboard
+        selector = ".navbar li:nth-child(3) > a"
+        elem = self.driver.find_element_by_css_selector(selector)
+        elem.click()
+
+        # Ensure that we got to the profile.
+        self.wait_for("Leaderboard")
+        assert "Leaderboard" in self.driver.page_source
