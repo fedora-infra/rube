@@ -22,6 +22,7 @@ import json
 import nose.tools.nontrivial
 import threading
 import time
+import traceback
 import zmq
 
 from functools import wraps
@@ -162,6 +163,7 @@ def tolerant(n=3):
                 try:
                     return func(*args, **kw)
                 except Exception as e:
+                    traceback.print_exc()
                     if not original_exception:
                         original_exception = e
 
