@@ -23,7 +23,10 @@ from selenium.webdriver.support.expected_conditions import title_is
 class TestBadges(rube.fedora.FedoraRubeTest):
     base = "https://badges.stg.fedoraproject.org"
     title = "Fedora Badges (staging!)"
-    logout_url = base + '/logout'
+    logout_url = [
+        base + "/logout",
+        "https://id.stg.fedoraproject.org/logout/",
+    ]
 
     @rube.core.tolerant()
     def test_login_dance(self):

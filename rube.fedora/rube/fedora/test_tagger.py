@@ -26,7 +26,10 @@ from selenium.webdriver.common.keys import Keys
 class TestTagger(rube.fedora.FedoraRubeTest):
     base = "https://apps.stg.fedoraproject.org/tagger"
     title = "Fedora Tagger"
-    logout_url = base + '/logout'
+    logout_url = [
+        base + "/logout",
+        "https://id.stg.fedoraproject.org/logout/",
+    ]
 
     @rube.core.tolerant()
     def test_stuff(self):

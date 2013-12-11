@@ -102,7 +102,11 @@ class RubeTest(unittest.TestCase):
             return  # skip the teardown
 
         if not self.no_auth and self.logout_url:
-            self.driver.get(self.logout_url)
+            if isinstance(self.logout_url, list):
+                for url in self.logout_url:
+                    self.driver.get(url)
+            else:
+                self.driver.get(self.logout_url)
 
     def wait_for(self, target):
         wait = ui.WebDriverWait(self.driver, self.timeout)

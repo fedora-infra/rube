@@ -23,7 +23,7 @@ from selenium.webdriver.support.expected_conditions import title_is
 class TestBlockerBugs(rube.fedora.FedoraRubeTest):
     base = "https://qa.stg.fedoraproject.org/blockerbugs"
     title = "Fedora Blocker Bugs"
-    logout_url = base + '/logout'
+    logout_url = "https://id.fedoraproject.org/logout/"
 
     @rube.core.tolerant()
     def test_login_dance(self):
