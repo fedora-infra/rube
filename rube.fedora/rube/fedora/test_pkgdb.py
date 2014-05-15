@@ -30,47 +30,52 @@ class TestPkgDb(rube.fedora.FedoraRubeTest):
         package_name = "nethack"
         self.driver.get(self.base)
 
-        elem = self.driver.find_element_by_name("pattern")
+        elem = self.driver.find_element_by_name("term")
         elem.send_keys(package_name)
         elem.send_keys(Keys.RETURN)
 
         self.wait_for(package_name)
-        sel = "a.PackageName:first-child"
+        sel = "#content li a:first-child"
         elem = self.driver.find_element_by_css_selector(sel)
         self.driver.get(elem.get_attribute("href"))
         self.wait_for(package_name)
 
     @rube.core.tolerant()
-    @rube.core.expects_zmqmsg('stg.pkgdb.acl.request.toggle')
+    @rube.core.expects_zmqmsg('stg.pkgdb.acl.update')
     def test_login_request_acls(self):
         package_name = "ruby"  # lol
 
         self.driver.get(self.base + "/login")
-        assert title_is("Login to the PackageDB"), self.driver.title
-        elem = self.driver.find_element_by_name("user_name")
-        elem.send_keys(self.auth[0])
-        elem = self.driver.find_element_by_name("password")
-        elem.send_keys(self.auth[1])
-        elem.send_keys(Keys.RETURN)
-        self.wait_for("The Fedora Project is maintained")
+        self.do_openid_login(last_click=False)
 
-        elem = self.driver.find_element_by_name("pattern")
+        # Back to pkgdb
+        self.wait_for("log out")
+
+        elem = self.driver.find_element_by_name("term")
         elem.send_keys(package_name)
         elem.send_keys(Keys.RETURN)
 
         self.wait_for(package_name)
-        sel = "a.PackageName:first-child"
+
+        sel = "#content li a:first-child"
         elem = self.driver.find_element_by_css_selector(sel)
         self.driver.get(elem.get_attribute("href"))
         self.wait_for(package_name)
 
-        elem = self.driver.find_element_by_css_selector(".addMyselfButton")
+        # Watch the package
+        sel = '[title="Request watch* ACL on all branches"]'
+        elem = self.driver.find_element_by_css_selector(sel)
         elem.click()
+        self.wait_for('Unwatch this package')
 
-        elem = self.driver.find_element_by_css_selector(".aclPresentBox")
+        # Unwatch the package
+        sel = '[title="Drop your watch* ACL on all branches"]'
+        elem = self.driver.find_element_by_css_selector(sel)
         elem.click()
-        self.wait_for("Approved")
+        self.wait_for('Watch this package')
 
-        elem = self.driver.find_element_by_css_selector(".aclPresentBox")
+        # Request commit access
+        sel = '[title="Request commit ACL on all branches"]'
+        elem = self.driver.find_element_by_css_selector(sel)
         elem.click()
-        self.wait_for("Obsolete")
+        self.wait_for(self.auth[0])
