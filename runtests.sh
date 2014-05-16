@@ -6,7 +6,7 @@ echo "running all tests"
 for package in rube.{core,fedora}; do
     echo "[$package] running tests"
     pushd $package
-    python setup.py test
+    $(which nosetests)
     popd
     echo "[$package] done with tests"
 done
