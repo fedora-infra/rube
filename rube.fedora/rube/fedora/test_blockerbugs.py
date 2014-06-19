@@ -18,6 +18,7 @@ import rube.core
 import rube.fedora
 
 from selenium.webdriver.support.expected_conditions import title_is
+from selenium.webdriver.common.keys import Keys
 
 
 class TestBlockerBugs(rube.fedora.FedoraRubeTest):
@@ -32,7 +33,7 @@ class TestBlockerBugs(rube.fedora.FedoraRubeTest):
         self.wait_for('open source')
 
         elem = self.driver.find_element_by_css_selector(".login-link > a")
-        elem.click()
+        elem.send_keys(Keys.RETURN)
 
         self.do_openid_login()
 
