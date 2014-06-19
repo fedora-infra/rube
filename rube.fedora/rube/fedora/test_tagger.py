@@ -40,8 +40,6 @@ class TestTagger(rube.fedora.FedoraRubeTest):
         button = self.driver.find_element_by_css_selector(selector)
         button.click()
 
-        alert = self.driver.switch_to_alert()
-        alert.accept()
         self.do_openid_login(last_click=True)
 
         # Back to tagger
