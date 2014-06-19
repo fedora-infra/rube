@@ -68,7 +68,6 @@ Rube currently tests the following services in staging:
 - https://admin.stg.fedoraproject.org/accounts
 - https://ask.stg.fedoraproject.org/questions/
 - https://docs.stg.fedoraproject.org/en-US/index.html
-- https://apps.stg.fedoraproject.org/busmon/
 - https://stg.fedoraproject.org/
 - https://apps.stg.fedoraproject.org/packages/
 
