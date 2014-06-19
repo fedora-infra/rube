@@ -35,7 +35,7 @@ class TestBlockerBugs(rube.fedora.FedoraRubeTest):
         elem = self.driver.find_element_by_css_selector(".login-link > a")
         elem.send_keys(Keys.RETURN)
 
-        self.do_openid_login()
+        self.do_openid_login(last_click=False)
 
         # Back to blockerbugs
         self.wait_for("Logout")
