@@ -36,8 +36,6 @@ class TestBadges(rube.fedora.FedoraRubeTest):
 
         self.driver.get(self.base + "/login")
 
-        alert = self.driver.switch_to_alert()
-        alert.accept()
         self.do_openid_login(last_click=False)
 
         # Back to badges

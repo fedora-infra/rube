@@ -24,7 +24,7 @@ class FedoraRubeTest(rube.core.RubeTest):
 
     def do_openid_login(self, last_click=True):
         # Openid page
-        self.wait_for("Create a new account")
+        self.wait_for("authenticate")
         elem = self.driver.find_element_by_name('username')
         elem.send_keys(self.auth[0])
         elem = self.driver.find_element_by_name('password')
