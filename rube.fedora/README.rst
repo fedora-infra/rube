@@ -75,7 +75,7 @@ No Staging
 ----------
 
 Here is a list of all the sites that do not have a staging equivalent from
-`apps.fp.o https://apps.fedoraproject.org`_.  Since ``rube.fedora`` *only*
+`apps.fp.o <https://apps.fedoraproject.org>`_.  Since ``rube.fedora`` *only*
 tests our staging infrastructure at this point, we have no tests for theses
 sites:
 
