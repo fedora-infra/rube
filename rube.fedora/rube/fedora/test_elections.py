@@ -27,13 +27,9 @@ class TestElections(rube.fedora.FedoraRubeTest):
     @rube.core.tolerant()
     def test_login(self):
         self.driver.get(self.base)
-        elem = self.driver.find_element_by_css_selector("input.button")
+        elem = self.driver.find_element_by_css_selector("#loginInfo > a")
         elem.click()
 
-        elem = self.driver.find_element_by_css_selector("#user_name")
-        elem.send_keys(self.auth[0])
-        elem = self.driver.find_element_by_css_selector("#password")
-        elem.send_keys(self.auth[1])
-        elem.send_keys(Keys.RETURN)
+        self.do_openid_login(last_click=False)
 
-        self.wait_for("Welcome, %s" % self.auth[0])
+        self.wait_for("Elections")
