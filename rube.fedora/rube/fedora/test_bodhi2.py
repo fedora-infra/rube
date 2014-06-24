@@ -28,9 +28,12 @@ class TestBodhi2(rube.fedora.FedoraRubeTest):
     logout_url = base + '/logout'
 
     @rube.core.tolerant()
-    def test_login(self):
+    def test_basic_functionality(self):
         self.driver.get(self.base + "/login")
         assert title_is("Login"), self.driver.title
         self.driver.get(self.base + "/login")
         self.do_openid_login(last_click=False)
         self.wait_for("Logout")
+
+        # Ensure the datagrepper widget got injected
+        assert self.driver.find_element_by_id('datagrepper-widget')
