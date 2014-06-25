@@ -96,3 +96,44 @@ class TestBodhi(rube.fedora.FedoraRubeTest):
         elem.submit()
 
         self.wait_for(tag)
+
+    @rube.core.tolerant()
+    @rube.core.expects_zmqmsg('stg.bodhi.update.request.testing')
+    def test_submit_update(self):
+        self.driver.get(self.base + "/login")
+        assert title_is("Login"), self.driver.title
+
+        elem = self.driver.find_element_by_name("user_name")
+        elem.send_keys(self.auth[0])
+        elem = self.driver.find_element_by_name("password")
+        elem.send_keys(self.auth[1])
+        elem.send_keys(Keys.RETURN)
+
+        elem = self.driver.find_element_by_link_text("New Update")
+        elem.click()
+        self.wait_for('New Update Form')
+
+        elem = self.driver.find_element_by_id("form_builds_text")
+        elem.send_keys('libseccomp-2.1.0-1.fc20')
+        elem = self.driver.find_element_by_id('form_bugs')
+        elem.send_keys('753357')
+        elem = self.driver.find_element_by_css_selector('#form_notes')
+        tag = str(uuid.uuid4())
+        elem.send_keys('This is a test update from rube.' + tag)
+        elem = self.driver.find_element_by_css_selector('input.submitbutton')
+        elem.submit()
+
+        self.wait_for('Update successfully created')
+
+        elem = self.driver.find_element_by_link_text("Revoke request")
+        elem.click()
+        self.wait_for('Testing request revoked')
+
+        elem = self.driver.find_element_by_link_text("Delete")
+        elem.click()
+        self.wait_for('Do you want to delete libseccomp-2.1.0-1.fc20')
+
+        elem = self.driver.find_element_by_id("okcancelform_ok")
+        elem.click()
+
+        self.wait_for('Deleted libseccomp-2.1.0-1.fc20')
