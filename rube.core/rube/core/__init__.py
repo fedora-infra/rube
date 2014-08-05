@@ -14,8 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Rube.  If not, see <http://www.gnu.org/licenses/>.
 
+import httplib
 import logging
 import unittest
+import nose.exc
+from functools import wraps
 import selenium.webdriver.support.ui as ui
 
 from selenium.webdriver.support.expected_conditions import title_is
@@ -46,7 +49,7 @@ def get_driver_and_proxy():
     global display
     global driver
     global proxy
-    if not driver:
+    if driver is None:
         if int(config.get('browsermob', {}).get('collect-har', 0)):
             from browsermobproxy import Server
             server = Server(config['browsermob']['path'])
@@ -68,12 +71,39 @@ def tearDown():
     global display
     global driver
     global proxy
-    if driver:
-        driver.close()
-    if display:
-        display.stop()
-    if proxy:
-        proxy.close()
+    if driver is not None:
+        try:
+            driver.close()
+        except:
+            pass
+        driver = None
+    if display is not None:
+        try:
+            display.stop()
+        except:
+            pass
+        display = None
+    if proxy is not None:
+        try:
+            proxy.close()
+        except:
+            pass
+        proxy = None
+
+
+def _skippable(func):
+    name = func.__name__
+
+    @wraps(func)
+    def newfunc(*args, **kw):
+        try:
+            return func(*args, **kw)
+        except KeyboardInterrupt:
+            tearDown()
+            raise nose.exc.SkipTest()
+
+    newfunc = nose.tools.nontrivial.make_decorator(func)(newfunc)
+    return newfunc
 
 
 class RubeTest(unittest.TestCase):
@@ -89,24 +119,39 @@ class RubeTest(unittest.TestCase):
     # Internally used to skip logout and whatnot during teardown
     _no_teardown = []
 
-    def setUp(self):
-        self.driver, self.proxy = get_driver_and_proxy()
-        self.driver.delete_all_cookies()
+    def __init__(self, *args, **kwargs):
+        super(RubeTest, self).__init__(*args, **kwargs)
+        # Now, monkey patch every test that I have and replace it with a
+        # skippable version of itself
+        for attr in dir(self):
+            if attr.startswith('test_'):
+                setattr(self, attr, _skippable(getattr(self, attr)))
 
-        # not no_auth ~= yes auth
-        if not self.no_auth and self.realm:
-            self.auth = prompt_for_auth(self.realm)
+
+    def setUp(self):
+        try:
+            self.driver, self.proxy = get_driver_and_proxy()
+            self.driver.delete_all_cookies()
+
+            # not no_auth ~= yes auth
+            if not self.no_auth and self.realm:
+                self.auth = prompt_for_auth(self.realm)
+        except KeyboardInterrupt:
+            raise nose.exc.SkipTest()
 
     def tearDown(self):
-        if self._testMethodName in self._no_teardown:
-            return  # skip the teardown
+        try:
+            if self._testMethodName in self._no_teardown:
+                return  # skip the teardown
 
-        if not self.no_auth and self.logout_url:
-            if isinstance(self.logout_url, list):
-                for url in self.logout_url:
-                    self.driver.get(url)
-            else:
-                self.driver.get(self.logout_url)
+            if not self.no_auth and self.logout_url:
+                if isinstance(self.logout_url, list):
+                    for url in self.logout_url:
+                        self.driver.get(url)
+                else:
+                    self.driver.get(self.logout_url)
+        except httplib.CannotSendRequest:
+            pass
 
     def wait_for(self, target):
         wait = ui.WebDriverWait(self.driver, self.timeout)
