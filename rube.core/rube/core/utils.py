@@ -162,6 +162,8 @@ def tolerant(n=3):
             for i in range(n):
                 try:
                     return func(*args, **kw)
+                except KeyboardInterrupt:
+                    raise
                 except Exception as e:
                     traceback.print_exc()
                     if not original_exception:
