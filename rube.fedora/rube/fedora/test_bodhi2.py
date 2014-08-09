@@ -22,18 +22,18 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.expected_conditions import title_is
 
 
-class TestBodhi2(rube.fedora.FedoraRubeTest):
-    base = "http://bodhi.dev.fedoraproject.org"
-    title = "Fedora Updates System"
-    logout_url = base + '/logout'
-
-    @rube.core.tolerant()
-    def test_basic_functionality(self):
-        self.driver.get(self.base + "/login")
-        assert title_is("Login"), self.driver.title
-        self.driver.get(self.base + "/login")
-        self.do_openid_login(last_click=False)
-        self.wait_for("Logout")
-
-        # Ensure the datagrepper widget got injected
-        assert self.driver.find_element_by_id('datagrepper-widget')
+#class TestBodhi2(rube.fedora.FedoraRubeTest):
+#    base = "http://bodhi.dev.fedoraproject.org"
+#    title = "Fedora Updates System"
+#    logout_url = base + '/logout'
+#
+#    @rube.core.tolerant()
+#    def test_basic_functionality(self):
+#        self.driver.get(self.base + "/login")
+#        assert title_is("Login"), self.driver.title
+#        self.driver.get(self.base + "/login")
+#        self.do_openid_login(last_click=False)
+#        self.wait_for("Logout")
+#
+#        # Ensure the datagrepper widget got injected
+#        assert self.driver.find_element_by_id('datagrepper-widget')
