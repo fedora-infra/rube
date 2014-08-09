@@ -63,20 +63,22 @@ class TestPkgDb(rube.fedora.FedoraRubeTest):
         self.wait_for(package_name)
 
         # Watch the package
-        sel = '[title="Request watch* ACL on all branches"]'
-        elem = self.driver.find_element_by_css_selector(sel)
-        elem.click()
-        alert = self.driver.switch_to_alert()
-        alert.accept()
-        self.wait_for('Unwatch this package')
+        if '+ Watch this package' in self.driver.page_source:
+            sel = '[title="Request watch* ACL on all branches"]'
+            elem = self.driver.find_element_by_css_selector(sel)
+            elem.click()
+            alert = self.driver.switch_to_alert()
+            alert.accept()
+            self.wait_for('- Unwatch this package')
 
         # Unwatch the package
-        sel = '[title="Drop your watch* ACL on all branches"]'
-        elem = self.driver.find_element_by_css_selector(sel)
-        elem.click()
-        alert = self.driver.switch_to_alert()
-        alert.accept()
-        self.wait_for('Watch this package')
+        if '- Unwatch this package' in self.driver.page_source:
+            sel = '[title="Drop your watch* ACL on all branches"]'
+            elem = self.driver.find_element_by_css_selector(sel)
+            elem.click()
+            alert = self.driver.switch_to_alert()
+            alert.accept()
+            self.wait_for('+ Watch this package')
 
         # Request commit access
         sel = '[title="Request commit ACL on all branches"]'
