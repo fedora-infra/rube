@@ -31,11 +31,16 @@ class FedoraRubeTest(rube.core.RubeTest):
         elem.send_keys(self.auth[1])
         elem.send_keys(Keys.RETURN)
 
-        # Redirect to confirm page
-        elem = self.driver.find_element_by_name('decided_allow')
-        elem.click()
+        import time
+        time.sleep(5)
 
-        # And again..
-        if last_click:
-            elem = self.driver.find_element_by_css_selector("input:last-child")
+        if 'decided_allow' in self.driver.page_source:
+            # Redirect to confirm page
+            elem = self.driver.find_element_by_name('decided_allow')
             elem.click()
+
+            # And again..
+            if last_click:
+                sel = "input:last-child"
+                elem = self.driver.find_element_by_css_selector(sel)
+                elem.click()
