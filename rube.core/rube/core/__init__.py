@@ -99,6 +99,8 @@ def _skippable(func):
         try:
             return func(*args, **kw)
         except KeyboardInterrupt:
+            import traceback
+            traceback.print_exc()
             tearDown()
             raise nose.exc.SkipTest()
 
