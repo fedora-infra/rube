@@ -41,8 +41,17 @@ def prompt_for_auth(service):
 
     original_stdout = sys.stdout
     sys.stdout = sys.stderr
-    username = vault.get(service, "username")
-    password = vault.get(service, "password")
+
+    if 'RUBE_USERNAME' in os.environ:
+        username = os.environ['RUBE_USERNAME']
+    else:
+        username = vault.get(service, "username")
+
+    if 'RUBE_PASSWORD' in os.environ:
+        password = os.environ['RUBE_PASSWORD']
+    else:
+        password = vault.get(service, "password")
+
     sys.stdout = original_stdout
 
     _cache[service] = (username, password)
