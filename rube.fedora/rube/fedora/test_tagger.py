@@ -15,6 +15,7 @@
 # along with Rube.  If not, see <http://www.gnu.org/licenses/>.
 
 import uuid
+import time
 
 import rube.core
 import rube.fedora
@@ -62,11 +63,13 @@ class TestTagger(rube.fedora.FedoraRubeTest):
 
         # Now, add a random tag and wait for the popup
         tag = str(uuid.uuid4()).split('-')[-1]
-        target = 'Tag "%s" added' % tag
         elem = self.driver.find_element_by_css_selector('body')
         elem.send_keys('a')
         elem = self.driver.find_element_by_css_selector('#add_box')
         elem.send_keys(tag)
         elem.send_keys(Keys.RETURN)
-        self.wait_for(target)
-        #assert target in self.driver.page_source
+        # Wait a sec
+        time.sleep(5)
+        # then check the json api for our bits
+        self.driver.get(self.base + "/api/v1/pkgwat")
+        assert tag in self.driver.page_source
