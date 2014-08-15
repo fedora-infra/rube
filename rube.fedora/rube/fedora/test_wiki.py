@@ -28,36 +28,37 @@ class TestWiki(rube.fedora.FedoraRubeTest):
         "?title=Special:UserLogout"
     title = "FedoraProject"
 
-    @rube.core.tolerant()
-    @rube.core.expects_zmqmsg('stg.wiki.article.edit')
-    def test_login_and_edit(self):
-        self.driver.get(self.base)
-        assert title_is(self.title), self.driver.title
-        self.wait_for('pt-login')
-        elem = self.driver.find_element_by_css_selector("#pt-login > a")
-        elem.click()
-
-        assert title_is("Log in - " + self.title), self.driver.title
-        elem = self.driver.find_element_by_id("wpName1")
-        elem.send_keys(self.auth[0])
-        elem = self.driver.find_element_by_id("wpPassword1")
-        elem.send_keys(self.auth[1])
-        elem = self.driver.find_element_by_id("wpLoginAttempt")
-        elem.submit()
-
-        assert title_is(self.title), self.driver.title
-
-        self.driver.get(
-            "https://stg.fedoraproject.org/wiki/Rube_Test_Page")
-        elem = self.driver.find_element_by_css_selector("#ca-edit > a")
-        elem.click()
-
-        elem = self.driver.find_element_by_id("wpTextbox1")
-        elem.send_keys(Keys.PAGE_DOWN)
-        tag = str(uuid.uuid4())
-        s = "Test comment from Rube\n%s" % tag
-        elem.send_keys(s)
-        elem = self.driver.find_element_by_css_selector("#wpSave")
-        elem.submit()
-
-        self.wait_for(tag)
+## Disable this test while login to stg wiki seems broken.
+#    @rube.core.tolerant()
+#    @rube.core.expects_zmqmsg('stg.wiki.article.edit')
+#    def test_login_and_edit(self):
+#        self.driver.get(self.base)
+#        assert title_is(self.title), self.driver.title
+#        self.wait_for('pt-login')
+#        elem = self.driver.find_element_by_css_selector("#pt-login > a")
+#        elem.click()
+#
+#        assert title_is("Log in - " + self.title), self.driver.title
+#        elem = self.driver.find_element_by_id("wpName1")
+#        elem.send_keys(self.auth[0])
+#        elem = self.driver.find_element_by_id("wpPassword1")
+#        elem.send_keys(self.auth[1])
+#        elem = self.driver.find_element_by_id("wpLoginAttempt")
+#        elem.submit()
+#
+#        assert title_is(self.title), self.driver.title
+#
+#        self.driver.get(
+#            "https://stg.fedoraproject.org/wiki/Rube_Test_Page")
+#        elem = self.driver.find_element_by_css_selector("#ca-edit > a")
+#        elem.click()
+#
+#        elem = self.driver.find_element_by_id("wpTextbox1")
+#        elem.send_keys(Keys.PAGE_DOWN)
+#        tag = str(uuid.uuid4())
+#        s = "Test comment from Rube\n%s" % tag
+#        elem.send_keys(s)
+#        elem = self.driver.find_element_by_css_selector("#wpSave")
+#        elem.submit()
+#
+#        self.wait_for(tag)
