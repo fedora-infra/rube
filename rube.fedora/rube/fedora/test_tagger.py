@@ -32,6 +32,7 @@ class TestTagger(rube.fedora.FedoraRubeTest):
         "https://id.stg.fedoraproject.org/logout/",
     ]
 
+    @rube.core.expects_zmqmsg('stg.fedoratagger.tag.create')
     @rube.core.tolerant()
     def test_stuff(self):
         self.driver.get(self.base)
