@@ -112,7 +112,7 @@ class RubeTest(unittest.TestCase):
     base = None
     title = None
     logout_url = None
-    timeout = 20000
+    timeout = 180
 
     # If you subclass and set this to True, then we won't prompt you for auth.
     no_auth = False
