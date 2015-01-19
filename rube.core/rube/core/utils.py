@@ -127,7 +127,7 @@ def ensures_after(after_callable):
     return decorate
 
 
-def expects_zmqmsg(topic, timeout=20000):
+def expects_zmqmsg(topic, timeout=180):
     """ A decorator that will cause a test to fail if it does not
     produce a ZeroMQ message that *contains* the topic given here.
     """
