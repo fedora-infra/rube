@@ -42,7 +42,7 @@ rube.core provides a number of useful decorators for your tests.
   a hidden ``_no_teardown`` list.  The ``tearDown`` method will skip it when
   the time comes.
 
-- ``@rube.core.expects_zmqmsg(topic, timeout=180)`` will cause rube to start
+- ``@rube.core.expects_zmqmsg(topic, timeout=300)`` will cause rube to start
   up a background thread with a ``zmq.SUB`` socket.  It will connect to
   whatever endpoint you have listed in ``setup.cfg`` like this::
 
