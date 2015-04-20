@@ -25,11 +25,21 @@ class FedoraRubeTest(rube.core.RubeTest):
     def do_openid_login(self, last_click=True):
         # Openid page
         self.wait_for("authenticate")
-        elem = self.driver.find_element_by_name('username')
-        elem.send_keys(self.auth[0])
-        elem = self.driver.find_element_by_name('password')
-        elem.send_keys(self.auth[1])
-        elem.send_keys(Keys.RETURN)
+        url = self.driver.current_url
+        if 'id.fedoraproject.org' in url:
+            # Prod fedoauth
+            elem = self.driver.find_element_by_name('username')
+            elem.send_keys(self.auth[0])
+            elem = self.driver.find_element_by_name('password')
+            elem.send_keys(self.auth[1])
+            elem.send_keys(Keys.RETURN)
+        else:
+            # STG ipsilon
+            elem = self.driver.find_element_by_name('login_name')
+            elem.send_keys(self.auth[0])
+            elem = self.driver.find_element_by_name('login_password')
+            elem.send_keys(self.auth[1])
+            elem.send_keys(Keys.RETURN)
 
         import time
         time.sleep(5)
