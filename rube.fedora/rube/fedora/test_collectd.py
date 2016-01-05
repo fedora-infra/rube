@@ -24,9 +24,9 @@ class TestCollectd(rube.fedora.FedoraRubeTest):
     no_auth = True
 
     @rube.core.tolerant()
-    def test_app01_page(self):
+    def test_proxy01_page(self):
         url = self.base + "bin/index.cgi" + \
-            "?hostname=app01&plugin=apache&timespan=86400" + \
-            "&action=show_selection&ok_button=OK"
+            "?hostname=proxy01.phx2.fedoraproject.org&plugin=apache" + \
+            "&timespan=86400&action=show_selection&ok_button=OK"
         self.driver.get(url)
         self.wait_for("ApacheBytes")
