@@ -26,7 +26,7 @@ class TestWiki(rube.fedora.FedoraRubeTest):
     base = "https://stg.fedoraproject.org/wiki"
     logout_url = "https://stg.fedoraproject.org/w/index.php" + \
         "?title=Special:UserLogout"
-    title = "FedoraProject"
+    title = "Fedora Project"
 
     @rube.core.tolerant()
     @rube.core.expects_zmqmsg('stg.wiki.article.edit')
