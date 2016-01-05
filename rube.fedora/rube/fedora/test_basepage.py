@@ -19,5 +19,5 @@ import rube.fedora
 
 class TestBasePage(rube.fedora.FedoraRubeTest):
     base = "https://stg.fedoraproject.org/"
-    title = "Fedora Project Homepage"
+    title = "Fedora"
     no_auth = True
