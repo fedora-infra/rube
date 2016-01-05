@@ -32,7 +32,7 @@ class FedoraRubeTest(rube.core.RubeTest):
         elem.send_keys(Keys.RETURN)
 
         import time
-        time.sleep(5)
+        time.sleep(2)
 
         if 'decided_allow' in self.driver.page_source:
             # Redirect to confirm page
