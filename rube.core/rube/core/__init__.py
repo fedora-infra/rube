@@ -21,8 +21,6 @@ import nose.exc
 from functools import wraps
 import selenium.webdriver.support.ui as ui
 
-from selenium.webdriver.support.expected_conditions import title_is
-
 from pyvirtualdisplay import Display
 from selenium import webdriver
 
@@ -163,7 +161,8 @@ class RubeTest(unittest.TestCase):
     @tolerant()
     def test_title(self):
         self.driver.get(self.base)
-        assert title_is(self.title), self.driver.title
+        errmsg = "%r not in %r" % (self.title, self.driver.title)
+        assert self.title in self.driver.title, errmsg
 
 
 __all__ = [

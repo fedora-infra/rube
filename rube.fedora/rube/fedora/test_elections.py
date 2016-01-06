@@ -22,7 +22,7 @@ from selenium.webdriver.common.keys import Keys
 
 class TestElections(rube.fedora.FedoraRubeTest):
     base = "https://admin.stg.fedoraproject.org/voting"
-    title = "Fedora Elections"
+    title = "Fedora elections"
 
     @rube.core.tolerant()
     def test_login(self):
