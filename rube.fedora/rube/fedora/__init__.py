@@ -14,6 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Rube.  If not, see <http://www.gnu.org/licenses/>.
 
+import time
+
 import rube.core
 
 from selenium.webdriver.common.keys import Keys
@@ -25,14 +27,14 @@ class FedoraRubeTest(rube.core.RubeTest):
     def do_openid_login(self, last_click=True):
         # Openid page
         self.wait_for("Ipsilon")
-        elem = self.driver.find_element_by_name('login_name')
-        elem.send_keys(self.auth[0])
-        elem = self.driver.find_element_by_name('login_password')
-        elem.send_keys(self.auth[1])
-        elem.send_keys(Keys.RETURN)
 
-        import time
-        time.sleep(2)
+        if 'login_name' in self.driver.page_source:
+            elem = self.driver.find_element_by_name('login_name')
+            elem.send_keys(self.auth[0])
+            elem = self.driver.find_element_by_name('login_password')
+            elem.send_keys(self.auth[1])
+            elem.send_keys(Keys.RETURN)
+            time.sleep(2)
 
         if 'decided_allow' in self.driver.page_source:
             # Redirect to confirm page
