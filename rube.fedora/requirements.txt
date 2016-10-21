@@ -1,1 +1,2 @@
 rube.core
+selenium<3
