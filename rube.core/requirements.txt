@@ -1,5 +1,5 @@
 vault
-selenium
+selenium<3
 nose
 pyzmq
 nose-timer
